@@ -1,0 +1,18 @@
+.generalStyle {
+	background-color: rgba(190, 186, 186, 0.521);
+	border: none;
+	border-radius: 1rem;
+	transition: all 0.5s;
+  }
+  
+  .generalStyle:hover {
+	/* transform: scale(.998); */
+	background-color: rgba(190, 186, 186, 0.621);
+  
+  }
+  
+  .generalStyle h1 {
+	color: white;
+	font-weight: bold;
+  }
+  

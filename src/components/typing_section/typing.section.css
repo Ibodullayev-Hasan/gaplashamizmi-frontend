@@ -1,0 +1,81 @@
+/* TypingSection container */
+.typingSection {
+  max-width: 800px; /* Max-width for responsiveness */
+  width: 50%; /* Use percentage for dynamic resizing */
+  height: 96%;
+  position: relative;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+/* Typing section header */
+.header-typing-section {
+  width: 100%; 
+  height: 15vh; /* Dynamic height based on viewport */
+  background-color: rgb(245, 49, 49);
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+  position: sticky; /* Sticky to keep the header fixed */
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Scrollable content */
+.typing-section-box-scroll-div {
+  width: 100%; /* Take full width */
+  min-height: 85vh; /* Adjust for responsive layout */
+  background-color: white;
+  position: relative;
+  padding: 1rem;
+  border-radius: 0 0 1rem 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Hide scrollbar (optional) */
+.typingSection::-webkit-scrollbar {
+  display: none;
+}
+
+.header-left-side-chats{
+  width: 50%;
+  height: 100%;
+  background-color: gray;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.chats-box{
+  width: 20%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  overflow: hidden;
+  background-color: red;
+}
+
+.header-right-side-tools{
+  width: 50%;
+  height: 100%;
+  background-color: darkblue;
+}
+
+
+
+/* Chats (if used) */
+.typingChats {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.typingChats img {
+  width: 50px;
+  height: 50px;
+  border-radius: 1rem;
+  margin-right: 1rem;
+}

@@ -1,0 +1,234 @@
+/* Userlar maydoni */
+.usersSection {
+  width: 28%;
+  height: 96%;
+  position: relative;
+  left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.noread-messages {
+  width: 100%;
+  height: 22%;
+  background-color: rgba(255, 255, 255, 0.927);
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  overflow: auto;
+}
+
+.noread-messages::-webkit-scrollbar {
+ display: none;
+}
+
+.message-edit {
+  width: 98%;
+  height: auto;
+  background-color: transparent;
+  color: black;
+  border: none;
+  position: absolute;
+  top: -0.5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+}
+
+.message-edit span:nth-child(1) {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.edit {
+  width: 1.7rem;
+  height: 1.7rem;
+  background-color: rgba(218, 217, 217, 0.836);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding: 8px; */
+}
+
+.message-edit span i {
+  color: darkgoldenrod;
+  font-size: 18px;
+}
+
+/* chatlar (o'qilmagan) */
+.messages {
+  width: 100%;
+  height: 62%;
+  overflow-x: auto;
+  white-space: nowrap;
+  position: relative;
+  top: 1vh;
+  padding: 0 2%;
+  /* margin: 2rem 0; */
+}
+
+
+.scroll-div {
+  display: flex;
+  flex-wrap: nowrap; /* Qator bo‘yicha joylashadi */
+  align-items: center; /* Rasm markazlanadi */
+  gap: 10px; /* Elementlar oralig‘idagi masofa */
+}
+
+.messages::-webkit-scrollbar {
+ display: none;
+}
+
+.chat {
+  width: 60px; /* Chatlar kvadrat bo‘lib qoladi */
+  height: 60px;
+  border-radius: 0.9rem;
+  overflow: hidden; /* Tashqaridan chiqadigan rasm qismlarini yashirish */
+  flex-shrink: 0;
+}
+
+.chat img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.9rem;
+  object-fit: fill;
+}
+
+/* search box */
+.search-box {
+  position: relative;
+  top: -1%;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 20px;
+  padding: 0 15px;
+  background-color: #f0f0f0;
+  width: 98%;
+  height: 45px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  padding: 0 10px;
+  font-size: 14px;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  color: #333; /* Text color */
+  border-radius: 20px;
+}
+
+.search-box i {
+  color: #888; /* Icon color */
+  margin-left: -30px;
+  cursor: pointer;
+}
+
+/* all chats */
+.allChatsBox {
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  width: 100%; /* Kenglikni containerga moslashtirish */
+  max-width: 1200px; /* Maksimal kenglikni cheklash */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: -5%;
+  height: 100%;
+}
+
+
+/* "All Chats" va Icon */
+.allChatsBox span,
+.allChatsBox i {
+  position: sticky;
+  top: 0;
+  background-color: #fefbfb;
+  z-index: 10;
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.allChatsBox i {
+  font-size: 1.5rem; /* Iconning kattaligi */
+  color: black;
+  margin-right: 10px; /* Icon va yozuv orasidagi masofa */
+}
+
+.allChatsBox span {
+  font-size: 1.2rem; 
+  font-weight: bold;
+  color: #565555;
+  margin-bottom: 20px;
+}
+/* Chats Container */
+.allChats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+  overflow-y: auto; 
+  height: calc(100% - 60px); /* Sticky qismdan qolgan joy */
+  padding-top: 20px; /* Scroll qismni "All Chats"dan ajratish uchun */
+}
+
+.allChats::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 5px;
+}
+
+.allChats::-webkit-scrollbar-thumb {
+  background-color: gray;
+  cursor: pointer;
+  border-radius: 50px;
+}
+
+
+/* Individual Chat Box */
+.chat-box {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, transform 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.chat-box:hover {
+  background-color: #f1f1f1; 
+}
+
+/* Chat Avatar (Image) */
+.chat-box img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Dumaloq shakl uchun */
+  object-fit: fill; /* Rasmni joyiga moslashtirish */
+  margin-right: 15px; /* Rasm va matn orasidagi masofa */
+}
+
+/* Chat Text */
+.chat-box span {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}

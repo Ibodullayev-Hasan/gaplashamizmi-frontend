@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.box {
+  width: 100%;
+  height: 100vh;
+  /* padding:0 5px; */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-image: url("/dark-city-background-ympe22eapcw8su8e.jpg");
+  background-repeat: no-repeat;
+  background-size: cover; /* Rasmani butun ekranga to‘ldirish uchun */
+  /* background-position:bottom;  */
+  background-position-y: 50%;
+}
