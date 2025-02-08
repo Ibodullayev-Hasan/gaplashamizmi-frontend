@@ -55,7 +55,7 @@ const UsersSection = () => {
 
       {/* Search Box with Icon */}
       <div className="search-box">
-        <input type="text" placeholder="Search or start of message" />
+        <input type="search" placeholder="Search or start of message" />
         <i className="fa-solid fa-magnifying-glass"></i>
       </div>
 

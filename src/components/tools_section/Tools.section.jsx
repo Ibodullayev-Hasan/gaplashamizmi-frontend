@@ -5,7 +5,7 @@ import "./tools.section.css";
 const ToolsSection = () => {
   return (
    <div className="generalStyle toolsSection ">
-    <h1>Tools section</h1>
+      
    </div>
   );
 };

@@ -190,7 +190,7 @@
 }
 
 .allChats::-webkit-scrollbar {
-  width: 8px;
+  width: 7px;
   border-radius: 5px;
 }
 
@@ -199,7 +199,6 @@
   cursor: pointer;
   border-radius: 50px;
 }
-
 
 /* Individual Chat Box */
 .chat-box {
