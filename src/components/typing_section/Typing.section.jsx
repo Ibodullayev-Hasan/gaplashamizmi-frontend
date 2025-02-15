@@ -5,17 +5,17 @@ import "@fortawesome/fontawesome-free/css/all.css";
 
 const TypingSection = () => {
   const [chats] = useState([
-    { id: 1, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Alex" },
-    { id: 2, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "John" },
-    { id: 3, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Emma" },
-    { id: 4, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Sophia" },
-    { id: 5, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Olim aka" },
-    { id: 6, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Jonish" },
-    { id: 6, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Jonish" },
-    { id: 6, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Jonish" },
-    { id: 6, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Jonish" },
-    { id: 6, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Jonish" },
-    { id: 6, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 1, imageUrl: "/pexels-iriser-1366957.jpg", username: "Alex" },
+    { id: 2, imageUrl: "/pexels-iriser-1366957.jpg", username: "John" },
+    { id: 3, imageUrl: "/pexels-iriser-1366957.jpg", username: "Emma" },
+    { id: 4, imageUrl: "/pexels-iriser-1366957.jpg", username: "Sophia" },
+    { id: 5, imageUrl: "/pexels-iriser-1366957.jpg", username: "Olim aka" },
+    { id: 6, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 6, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 6, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 6, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 6, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 6, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
   ]);
 
   const [selectedChat, setSelectedChat] = useState(null);
