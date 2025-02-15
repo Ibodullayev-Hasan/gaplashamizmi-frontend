@@ -4,14 +4,18 @@ import "./typing.section.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 
 const TypingSection = () => {
-  const [chats, setChats] = useState([
+  const [chats] = useState([
     { id: 1, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Alex" },
     { id: 2, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "John" },
     { id: 3, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Emma" },
     { id: 4, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Sophia" },
-    { id: 4, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Olim aka" },
-    { id: 4, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Jonish" },
-    { id: 4, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Userjon" },
+    { id: 5, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Olim aka" },
+    { id: 6, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 6, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 6, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 6, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 6, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 6, imageUrl: "/src/assets/pexels-iriser-1366957.jpg", username: "Jonish" },
   ]);
 
   const [selectedChat, setSelectedChat] = useState(null);
@@ -41,19 +45,8 @@ const TypingSection = () => {
       </header>
 
       {/* Asosiy chat qismi */}
-      {selectedChat ? (
-        <div className="chat-window">
-          <div className="chat-window-header">
-            <img className="chat-window-avatar" src={selectedChat.imageUrl} alt={selectedChat.username} />
-            <p className="chat-window-username">{selectedChat.username}</p>
-            <button className="close-chat-button" onClick={() => setSelectedChat(null)}>✖</button>
-          </div>
-          <div className="chat-window-body">
-            <p>Bu yerda {selectedChat.username} bilan yozishmalar chiqadi...</p>
-          </div>
-        </div>
-      ) : (
-        <div className="typing-section-box-scroll-div">
+      <div className="chat-container">
+        <div className={`typing-section-box-scroll-div ${selectedChat ? "hidden" : ""}`}>
           {chats.map((chat) => (
             <div 
               key={chat.id} 
@@ -68,7 +61,21 @@ const TypingSection = () => {
             </div>
           ))}
         </div>
-      )}
+
+        {/* Chat oynasi */}
+        {selectedChat && (
+          <div className="chat-window">
+            <div className="chat-window-header">
+              <img className="chat-window-avatar" src={selectedChat.imageUrl} alt={selectedChat.username} />
+              <p className="chat-window-username">{selectedChat.username}</p>
+              <button className="close-chat-button" onClick={() => setSelectedChat(null)}>✖</button>
+            </div>
+            <div className="chat-window-body">
+              <p>Bu yerda {selectedChat.username} bilan yozishmalar chiqadi...</p>
+            </div>
+          </div>
+        )}
+      </div>
     </section>
   );
 };

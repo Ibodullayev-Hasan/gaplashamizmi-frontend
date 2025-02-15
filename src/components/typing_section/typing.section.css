@@ -7,9 +7,9 @@
   height: 96%;
   position: relative;
   overflow: hidden;
-  overflow-y: auto;
 }
 
+/* Header */
 .header-typing-section {
   display: flex;
   justify-content: space-between;
@@ -24,7 +24,14 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+}
 
+.chat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
 }
 
 .chats-box {
@@ -34,14 +41,14 @@
   align-items: center;
   gap: 0.5rem;
   position: relative;
-  padding: 0 0rem 0 0rem;
+  padding: 0;
   border-top-left-radius: 1rem;
 }
 
 .online img {
   position: relative;
-  margin-right: -18px; /* Ustma-ust chiqish uchun manfiy margin */
-  border-radius: 0.8rem; 
+  margin-right: -18px;
+  border-radius: 0.8rem;
   overflow: hidden;
   width: 40px;
   height: 40px;
@@ -50,8 +57,8 @@
 
 .group-title-box {
   position: relative;
-  width: 180px; /* Matnni sig‘dirish uchun kenglik */
-  height: 60px; 
+  width: 180px;
+  height: 60px;
   overflow: hidden;
 }
 
@@ -65,7 +72,7 @@
   display: block;
   white-space: nowrap;
   position: absolute;
-  top: -.4rem;
+  top: -0.4rem;
 }
 
 .online-count {
@@ -105,15 +112,20 @@
 }
 
 .typing-section-box-scroll-div {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-height: 600px;
   overflow-y: auto;
   padding: 1rem;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease-in-out;
+}
+
+.typing-section-box-scroll-div.hidden {
+  display: none;
 }
 
 .chat-message {
@@ -128,6 +140,11 @@
 
 .chat-message:last-child {
   border-bottom: none;
+}
+
+.chat-message:hover {
+  background-color: #f5f5f5;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .chat-avatar {
@@ -156,25 +173,35 @@
 .typing-section-box-scroll-div::-webkit-scrollbar {
   display: none;
 }
+
 /* Chat Oynasi */
 .chat-window {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  max-height: 600px;
-  overflow-y: auto;
-  padding: 1rem;
+  width: 100%;
+  height: 100%;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.chat-window.hidden {
+  display: none;
 }
 
 .chat-window-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
 }
-
 .chat-window-avatar {
   width: 40px;
   height: 40px;
@@ -193,5 +220,7 @@
 }
 
 .chat-window-body {
-  margin-top: 10px;
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
 }
