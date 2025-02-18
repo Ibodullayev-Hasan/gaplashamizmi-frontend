@@ -106,10 +106,23 @@
   background: #e0e0e0;
 }
 
-.icon-button i {
+.icon-button svg {
   font-size: 1rem;
   color: #555;
 }
+
+.star svg{
+  color: gold;
+}
+
+.video svg{
+  color: red;
+}
+
+.call svg{
+  color: green;
+}
+
 
 .typing-section-box-scroll-div {
   flex: 1;

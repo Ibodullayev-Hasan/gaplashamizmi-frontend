@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import "../../style/general.style.css";
+import "../../styles/general.style.css";
 import "./typing.section.css";
-import "@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar, faVideo, faPhone } from "@fortawesome/free-solid-svg-icons";
 
 const TypingSection = () => {
   const [chats] = useState([
@@ -11,11 +13,11 @@ const TypingSection = () => {
     { id: 4, imageUrl: "/pexels-iriser-1366957.jpg", username: "Sophia" },
     { id: 5, imageUrl: "/pexels-iriser-1366957.jpg", username: "Olim aka" },
     { id: 6, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
-    { id: 6, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
-    { id: 6, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
-    { id: 6, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
-    { id: 6, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
-    { id: 6, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 7, imageUrl: "/pexels-iriser-1366957.jpg", username: "🫣" },
+    { id: 8, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 9, imageUrl: "/pexels-iriser-1366957.jpg", username: "." },
+    { id: 10, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 11, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
   ]);
 
   const [selectedChat, setSelectedChat] = useState(null);
@@ -38,25 +40,41 @@ const TypingSection = () => {
           </div>
         </div>
         <div className="header-right-side-tools">
-          <button className="icon-button star"><i className="fa-solid fa-star"></i></button>
-          <button className="icon-button video"><i className="fa-solid fa-video"></i></button>
-          <button className="icon-button call"><i className="fa-solid fa-phone"></i></button>
+          <button className="icon-button star">
+            <FontAwesomeIcon icon={faStar} />
+          </button>
+          <button className="icon-button video">
+            <FontAwesomeIcon icon={faVideo} />
+          </button>
+          <button className="icon-button call">
+            <FontAwesomeIcon icon={faPhone} />
+          </button>
         </div>
       </header>
 
       {/* Asosiy chat qismi */}
       <div className="chat-container">
-        <div className={`typing-section-box-scroll-div ${selectedChat ? "hidden" : ""}`}>
+        <div
+          className={`typing-section-box-scroll-div ${
+            selectedChat ? "hidden" : ""
+          }`}
+        >
           {chats.map((chat) => (
-            <div 
-              key={chat.id} 
-              className="chat-message" 
+            <div
+              key={chat.id}
+              className="chat-message"
               onClick={() => setSelectedChat(chat)}
             >
-              <img className="chat-avatar" src={chat.imageUrl} alt={chat.username} />
+              <img
+                className="chat-avatar"
+                src={chat.imageUrl}
+                alt={chat.username}
+              />
               <div className="chat-content">
                 <p className="chat-username">{chat.username}</p>
-                <p className="chat-text">This is a sample message from {chat.username}.</p>
+                <p className="chat-text">
+                  This is a sample message from {chat.username}.
+                </p>
               </div>
             </div>
           ))}
@@ -66,12 +84,23 @@ const TypingSection = () => {
         {selectedChat && (
           <div className="chat-window">
             <div className="chat-window-header">
-              <img className="chat-window-avatar" src={selectedChat.imageUrl} alt={selectedChat.username} />
+              <img
+                className="chat-window-avatar"
+                src={selectedChat.imageUrl}
+                alt={selectedChat.username}
+              />
               <p className="chat-window-username">{selectedChat.username}</p>
-              <button className="close-chat-button" onClick={() => setSelectedChat(null)}>✖</button>
+              <button
+                className="close-chat-button"
+                onClick={() => setSelectedChat(null)}
+              >
+                ✖
+              </button>
             </div>
             <div className="chat-window-body">
-              <p>Bu yerda {selectedChat.username} bilan yozishmalar chiqadi...</p>
+              <p>
+                Bu yerda {selectedChat.username} bilan yozishmalar chiqadi...
+              </p>
             </div>
           </div>
         )}

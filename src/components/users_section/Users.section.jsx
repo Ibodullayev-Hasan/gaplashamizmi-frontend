@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../style/general.style.css";
+import "../../styles/general.style.css";
 import "./users.section.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 

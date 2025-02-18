@@ -1,19 +1,18 @@
-import React from 'react'
-import { useState } from 'react'
-import './App.css'
-import UsersSection from './components/users_section/Users.section'
-import TypingSection from './components/typing_section/Typing.section'
-import ToolsSection from './components/tools_section/Tools.section'
+import React from "react";
+import Router from "./router/router";
+import CombinedProvider from "./provider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Loading from "./animation/loading";
 
-function App() {
-
+const App = () => {
   return (
-    <div className='box'>
-      <UsersSection/>
-      <TypingSection/>
-      <ToolsSection/>
-    </div>
-  )
-}
+    <CombinedProvider>
+      <ToastContainer />
+      <Loading />
+      <Router />
+    </CombinedProvider>
+  );
+};
 
-export default App
+export default App;
