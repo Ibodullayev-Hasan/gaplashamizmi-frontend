@@ -5,7 +5,12 @@
   }
   
   .not-found h1 {
-	font-size: 100px;
+	font-size: 3rem;
+	color: #02bbd0;
+  }
+  
+  .not-found h2 {
+	font-size: 2rem;
 	color: #ff0000;
   }
   
