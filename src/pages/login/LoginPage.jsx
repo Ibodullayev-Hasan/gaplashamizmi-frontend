@@ -1,21 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./login.style.css"
+import "./login.style.css";
+
+const API_URL = "http://localhost:3015/api/v1/auth/login";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    
-    // Bu yerda API ga so‘rov yuborib, foydalanuvchini tekshirish kerak
-    if (username === "admin" && password === "1234") {
-      localStorage.setItem("token", "fake-jwt-token"); // Tokenni saqlash (real JWT bo‘lishi kerak)
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
       navigate("/chat");
-    } else {
-      alert("Noto‘g‘ri login yoki parol!");
+    }
+  }, []); // Login sahifasiga token bilan kelsa, uni yo‘naltiramiz
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("access_token", data.accToken); // accToken emas!
+        navigate("/chat");
+      } else {
+        alert(data.message || "Noto‘g‘ri login yoki parol!");
+      }
+    } catch (error) {
+      console.error("Xatolik yuz berdi:", error);
+      alert("Server bilan bog‘lanishda xatolik!");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -24,10 +52,10 @@ const LoginPage = () => {
       <h2>Kirish</h2>
       <form onSubmit={handleLogin}>
         <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
@@ -37,7 +65,9 @@ const LoginPage = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Kirish</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Kirish..." : "Kirish"}
+        </button>
       </form>
     </div>
   );

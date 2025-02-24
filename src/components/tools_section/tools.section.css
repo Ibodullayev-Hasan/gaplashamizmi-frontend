@@ -6,7 +6,6 @@
   background-color: white;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
   align-items: flex-start;
   padding: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -37,7 +36,6 @@
   margin-bottom: 5px;
 }
 
-
 .tools-buttons {
   width: 100%;
   display: flex;
@@ -47,18 +45,25 @@
   gap: 15px;
 }
 
-.tools-section-button{
+.tools-section-button {
   width: 90%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 0 0 0 0;
-  position: relative;
+  /* padding: 0 0 0 0;
+  position: relative; */
 }
 
 .tools-section-button span {
-  display: block;
-  margin-left: 5%;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  margin-left: -5%;
+  border: 1px solid skyblue;
+  border-left: none;
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  padding: 0 8%;
 }
 
 .tools-section-button span a {
@@ -71,44 +76,64 @@
   border: none;
   font-size: 1.4rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  /* transition: all 0.3s ease; */
   width: 40px;
   height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.1);
+  z-index: 100;
 }
 
 .tools-section-button-icon:hover {
-  background: #e0e0e0;
+  background: #f3f0f0;
 }
 
 .tools-section-button-icon svg {
   font-size: 18px;
-  color: #646363;
-}
+  color: #bcb8b8;
+  transition: transform 0.1s ease;
 
-.tools-section-button-icon.dashboard svg {
-  color: #066395;
 }
 
 .tools-section-button-icon.group svg {
   color: #ff5500;
 }
 
-.tools-section-button-icon.chat svg {
+.tools-section-button-icon.group svg:hover {
+  transform: scale(1.1);
+}
+
+.tools-section-button-icon.settings svg {
   color: #0ed9a0;
 }
 
-.tools-section-button-icon.files svg {
- 
+.tools-section-button-icon.settings svg:hover{
+  transform: rotate(-120deg);
+}
+
+.tools-section-button-icon.messages svg {
   color: gold;
 }
 
-.tools-section-button-icon.call svg {
-  color: #28a745;
+.tools-section-button-icon.messages svg:hover{
+  transform: rotate(-30deg);
 }
 
+.tools-section-button-icon.calendar svg {
+  color: skyblue;
+}
 
+.tools-section-button-icon.calendar svg:hover {
+  transform: rotate(-30deg);
+}
+
+.tools-section-button-icon.account svg {
+  color: rgb(8, 255, 61);
+}
+
+.tools-section-button-icon.account svg:hover {
+  transform: scale(1.2);
+}
