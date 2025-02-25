@@ -16,6 +16,8 @@
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@tailwindcss/postcss": "^4.0.8",
+    "@tailwindcss/vite": "^4.0.8",
     "@tanstack/react-query": "^5.66.9",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
@@ -34,6 +36,7 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
     "globals": "^15.14.0",
+    "tailwindcss": "^4.0.8",
     "vite": "^6.0.5"
   }
 }

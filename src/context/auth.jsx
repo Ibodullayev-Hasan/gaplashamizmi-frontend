@@ -1,18 +1,28 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postRefchMutation } from "../services/post.service";
 import { getData } from "../services/get.service";
+import { useQuery } from "@tanstack/react-query";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const router = useNavigate();
-  const [token, setToken] = useState(localStorage.getItem(`access_token`));
-  const { mutate: postRefresh } = postRefchMutation(`user`);
+  const navigate = useNavigate();
+  const [token, setToken] = useState(localStorage.getItem("access_token"));
+  const { mutate: postRefresh } = postRefchMutation("user");
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("access_token");
+    if (storedToken) {
+      setToken(JSON.parse(storedToken)); 
+    }
+  }, []);
 
   useEffect(() => {
     if (!token) {
-      localStorage.removeItem(`access_token`);
+      localStorage.removeItem("access_token");
+      document.cookie =
+        "refToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     }
   }, [token]);
 
@@ -23,51 +33,47 @@ export const AuthProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    if (data === 403 || data === 404) {
+    if (data === 403 || data === 401) {
       setToken(null);
-      router("/");
+      navigate("/login");
     }
-    if (data == 401) {
-      const refresh = JSON.parse(localStorage.getItem("refresh_token"));
-      if (refresh) {
-        postRefresh(
-          {
-            url: "/auth/refresh",
+
+    if (data === 401) {
+      postRefresh(
+        { url: "auth/refresh" },                           
+        {
+          onSuccess: (res) => {
+            if (res?.accToken) {
+              localStorage.setItem(
+                "access_token",
+                JSON.stringify(res.accToken)
+              );
+              setToken(res?.accToken);
+              refetch();
+            } else {
+              setToken(null);
+              navigate("/login");
+            }
           },
-          {
-            onSuccess: (res) => {
-              if (res?.access_token) {
-                localStorage.setItem(
-                  "access_token",
-                  JSON.stringify(res.access_token)
-                );
-                setToken(res?.access_token);
-                refetch();
-              }
-              if (res?.status === 403) {
-                setToken(null);
-                router("/");
-              }
-            },
-            onError: (error) => {
-              console.error(error);
-            },
-          }
-        );
-      }
+          onError: (error) => {
+            console.error(error);
+          },
+        }
+      );
     }
   }, [data]);
 
-  //   return...
+  const logout = () => {
+    setToken(null);
+    localStorage.removeItem("access_token");
+    document.cookie =
+      "refToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    navigate("/login");
+  };
+
   return (
     <AuthContext.Provider
-      value={{
-        token,
-        setToken,
-        data,
-        isLoading,
-        refetch,
-      }}
+      value={{ token, setToken, data, isLoading, refetch, logout }}
     >
       {children}
     </AuthContext.Provider>

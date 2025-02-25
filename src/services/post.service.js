@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "./token.service";
 
-const BASE_URL = process.env.VITE_API;
+const BASE_URL = import.meta.env.VITE_API;
 
 export const postData = async ({ url, body }) => {
   try {
