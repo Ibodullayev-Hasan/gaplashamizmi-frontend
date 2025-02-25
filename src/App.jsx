@@ -10,8 +10,8 @@ const App = () => {
   return (
     <ReactQueryProvider>
       <AuthProvider>
-        <ToastContainer />
-        <Loading />
+        {/* <ToastContainer /> */}
+        {/* <Loading /> */}
         <AppRouter />
       </AuthProvider>
     </ReactQueryProvider>

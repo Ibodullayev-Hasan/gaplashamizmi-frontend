@@ -12,12 +12,12 @@ const TypingSection = () => {
     { id: 3, imageUrl: "/pexels-iriser-1366957.jpg", username: "Emma" },
     { id: 4, imageUrl: "/pexels-iriser-1366957.jpg", username: "Sophia" },
     { id: 5, imageUrl: "/pexels-iriser-1366957.jpg", username: "Olim aka" },
-    { id: 6, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 6, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jons Ton" },
     { id: 7, imageUrl: "/pexels-iriser-1366957.jpg", username: "🫣" },
-    { id: 8, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 8, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jons Ton" },
     { id: 9, imageUrl: "/pexels-iriser-1366957.jpg", username: "." },
-    { id: 10, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
-    { id: 11, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jonish" },
+    { id: 10, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jons Ton" },
+    { id: 11, imageUrl: "/pexels-iriser-1366957.jpg", username: "Jons Ton" },
   ]);
 
   const [selectedChat, setSelectedChat] = useState(null);
