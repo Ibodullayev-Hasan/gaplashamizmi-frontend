@@ -6,10 +6,11 @@ import { postDataMutation } from "../../services/post.service";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const { setToken } = useAuth(); // useAuth ni to‘g‘ri chaqiramiz
-  const { mutate: userLogin } = postDataMutation("user");
+  const { setToken } = useAuth();
+  const { mutate: userLogin, isLoading } = postDataMutation("user");
   const navigate = useNavigate();
 
+  // Token bor bo‘lsa, chat sahifasiga yo‘naltirish
   useEffect(() => {
     if (localStorage.getItem("access_token")) {
       navigate("/chat");
@@ -29,10 +30,11 @@ const LoginPage = () => {
       },
       {
         onSuccess: (res) => {
-          if (res?.accToken) { // "accToken" ni to'g'ri ishlatamiz
+          if (res?.accToken) {
+            // Tokenni localStorage orqali saqlash
+            localStorage.setItem("access_token", res.accToken);
+            localStorage.setItem("refToken", res.refToken);
             setToken(res.accToken);
-            localStorage.setItem("access_token", JSON.stringify(res.accToken)); // "accToken" saqlanadi
-            document.cookie = `refToken=${res.refToken}; path=/;`;
             navigate("/chat");
           }
         },
@@ -42,7 +44,6 @@ const LoginPage = () => {
       }
     );
   };
-  
 
   return (
     <div className="login-container">
@@ -64,7 +65,9 @@ const LoginPage = () => {
           placeholder="Parolni kiriting"
           required
         />
-        <button type="submit">Kirish</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Kirish..." : "Kirish"}
+        </button>
       </form>
     </div>
   );

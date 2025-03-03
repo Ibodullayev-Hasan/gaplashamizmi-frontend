@@ -3,39 +3,39 @@ import { axiosInstance } from "./token.service";
 
 const BASE_URL = import.meta.env.VITE_API;
 
+// POST so‘rov jo‘natish funksiyasi
 export const postData = async ({ url, body }) => {
   try {
     const res = await axiosInstance.post(`${BASE_URL}${url}`, body);
-
     return res?.data;
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-//
+// POST request uchun React Query mutatsiyasi
 export const postDataMutation = (key) => {
-  const queryClinet = useQueryClient();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: postData,
     onSuccess: () => {
-      queryClinet.invalidateQueries([key]);
+      queryClient.invalidateQueries([key]);
     },
   });
 };
 
-//
-export const postRefech = async ({ url }) => {
+// Refresh token orqali yangi access token olish
+export const postRefresh = async ({ url }) => {
   try {
+    const accessToken = localStorage.getItem("access_token"); // Token localStorage'dan olinadi
+
     const res = await axiosInstance.post(
       `${BASE_URL}${url}`,
       {},
       {
         headers: {
-          Authorization: `Bearer, ${JSON.parse(
-            localStorage.getItem(`access_token`)
-          )}`,
+          Authorization: accessToken ? `Bearer ${accessToken}` : "",
         },
       }
     );
@@ -46,14 +46,17 @@ export const postRefech = async ({ url }) => {
   }
 };
 
-//
-export const postRefchMutation = (key) => {
-  const queryClinet = useQueryClient();
+// Refresh request uchun React Query mutatsiyasi
+export const postRefreshMutation = (key) => {
+  const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: postData,
-    onSuccess: () => {
-      queryClinet.invalidateQueries([key]);
+    mutationFn: postRefresh,
+    onSuccess: (res) => {
+      if (res?.accToken) {
+        localStorage.setItem("access_token", res.accToken); // Yangi tokenni saqlash
+      }
+      queryClient.invalidateQueries([key]);
     },
   });
 };

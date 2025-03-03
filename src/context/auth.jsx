@@ -1,28 +1,46 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { postRefchMutation } from "../services/post.service";
 import { getData } from "../services/get.service";
 import { useQuery } from "@tanstack/react-query";
+import { postRefreshMutation } from "../services/post.service";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [token, setToken] = useState(localStorage.getItem("access_token"));
-  const { mutate: postRefresh } = postRefchMutation("user");
+  const { mutate: postRefresh } = postRefreshMutation("user");
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("access_token");
-    if (storedToken) {
-      setToken(JSON.parse(storedToken)); 
+    if (!token) {
+      refreshAccessToken();
     }
   }, []);
+
+  const refreshAccessToken = () => {
+    postRefresh(
+      { url: "auth/refresh" },
+      {
+        onSuccess: (res) => {
+          if (res?.accToken) {
+            localStorage.setItem("access_token", res.accToken);
+            localStorage.setItem("refToken", res.refToken);
+            setToken(res.accToken);
+          } else {
+            logout();
+          }
+        },
+        onError: () => {
+          logout();
+        },
+      }
+    );
+  };
 
   useEffect(() => {
     if (!token) {
       localStorage.removeItem("access_token");
-      document.cookie =
-        "refToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      localStorage.removeItem("refToken");
     }
   }, [token]);
 
@@ -34,47 +52,19 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (data === 403 || data === 401) {
-      setToken(null);
-      navigate("/login");
-    }
-
-    if (data === 401) {
-      postRefresh(
-        { url: "auth/refresh" },                           
-        {
-          onSuccess: (res) => {
-            if (res?.accToken) {
-              localStorage.setItem(
-                "access_token",
-                JSON.stringify(res.accToken)
-              );
-              setToken(res?.accToken);
-              refetch();
-            } else {
-              setToken(null);
-              navigate("/login");
-            }
-          },
-          onError: (error) => {
-            console.error(error);
-          },
-        }
-      );
+      refreshAccessToken();
     }
   }, [data]);
 
   const logout = () => {
     setToken(null);
     localStorage.removeItem("access_token");
-    document.cookie =
-      "refToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    localStorage.removeItem("refToken");
     navigate("/login");
   };
 
   return (
-    <AuthContext.Provider
-      value={{ token, setToken, data, isLoading, refetch, logout }}
-    >
+    <AuthContext.Provider value={{ token, setToken, data, isLoading, refetch, logout }}>
       {children}
     </AuthContext.Provider>
   );

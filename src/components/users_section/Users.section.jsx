@@ -4,30 +4,21 @@ import "./users.section.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 
 const UsersSection = () => {
-  const [chats, setChats] = useState([
-    { id: 1, imageUrl: "/pexels-iriser-1366957.jpg", username:"alex" },
-    { id: 2, imageUrl: "/pexels-iriser-1366957.jpg", username:"alex" },
-    { id: 3, imageUrl: "/pexels-iriser-1366957.jpg", username:"alex" },
-    { id: 4, imageUrl: "/pexels-iriser-1366957.jpg", username:"alex" },
-    { id: 5, imageUrl: "/pexels-iriser-1366957.jpg", username:"alex" },
-    { id: 6, imageUrl: "/pexels-iriser-1366957.jpg", username:"alex" },
-    { id: 7, imageUrl: "/pexels-iriser-1366957.jpg", username:"alex" },
+  const [chats, setChats] = useState([]);
 
-  ]);
+  useEffect(() => {
+    const fetchChats = async () => {
+      try {
+        const response = await fetch("http://localhost:3015/api/v1/users");
+        const data = await response.json();
+        setChats(data);
+      } catch (error) {
+        console.error("Xato yuz berdi:", error);
+      }
+    };
 
-  // useEffect(() => {
-  //   const fetchChats = async () => {
-  //     try {
-  //       const response = await fetch("http://localhost:5000/api/chats");
-  //       const data = await response.json();
-  //       setChats(data);
-  //     } catch (error) {
-  //       console.error("Xato yuz berdi:", error);
-  //     }
-  //   };
-
-  //   fetchChats();
-  // }, []);
+    fetchChats();
+  }, []);
 
   return (
     <section className="generalStyle usersSection">
@@ -60,21 +51,20 @@ const UsersSection = () => {
       </div>
 
       {/* All Chats */}
-<div className="allChatsBox">
-  <span>
-    <i className="fa-solid fa-comment-dots"></i>
-    All chats
-  </span>
-  <div className="allChats">
-    {chats.map((chat) => (
-      <div key={chat.id} className="chat-box">
-        <img src={chat.imageUrl} alt={`${chat.id}`} />
-        <span>{chat.username}</span>
+      <div className="allChatsBox">
+        <span>
+          <i className="fa-solid fa-comment-dots"></i>
+          All chats
+        </span>
+        <div className="allChats">
+          {chats.map((chat) => (
+            <div key={chat.id} className="chat-box">
+              <img src={chat.imageUrl} alt={`${chat.id}`} />
+              <span>{chat.username}</span>
+            </div>
+          ))}
+        </div>
       </div>
-    ))}
-  </div>
-</div>
-
     </section>
   );
 };
