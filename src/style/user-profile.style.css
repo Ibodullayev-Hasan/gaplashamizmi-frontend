@@ -1,0 +1,11 @@
+:root {
+	--chat-theme: light;
+	--chat-font: sans-serif;
+	--chat-back-img: url('https://wallpapers.com/images/hd/dark-city-background-ympe22eapcw8su8e.jpg');
+  }
+  
+  .chat-container {
+	background-image: var(--chat-back-img);
+	font-family: var(--chat-font);
+  }
+  

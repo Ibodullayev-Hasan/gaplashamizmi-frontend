@@ -1,19 +1,24 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "./token.service";
+import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_API;
+// Vite loyihalarida .env fayldagi o‘zgaruvchilar import.meta.env orqali olinadi.
+// Agar "VITE_" prefiksi bo‘lmasa, o‘zgaruvchi yuklanmaydi.
 
-// POST so‘rov jo‘natish funksiyasi
+/* ---------------------------------------------- */
+// API ga POST so‘rovi yuboruvchi umumiy funksiya
 export const postData = async ({ url, body }) => {
   try {
-    const res = await axiosInstance.post(`${BASE_URL}${url}`, body);
-    return res?.data;
+    const response = await axiosInstance.post(`${BASE_URL}${url}`, body);
+
+    return response?.data;
   } catch (error) {
-    throw new Error(error.message);
+    return Promise.reject(error); // Xatolikni qaytarish uchun
   }
 };
 
-// POST request uchun React Query mutatsiyasi
+// API ga post so‘rovini yuborish uchun mutatsiya (React Query bilan ishlaydi)
 export const postDataMutation = (key) => {
   const queryClient = useQueryClient();
 
@@ -25,38 +30,32 @@ export const postDataMutation = (key) => {
   });
 };
 
-// Refresh token orqali yangi access token olish
+// Asosan refresh token orqali token yangilashda ishlatiladi
 export const postRefresh = async ({ url }) => {
   try {
-    const accessToken = localStorage.getItem("access_token"); // Token localStorage'dan olinadi
+    const refreshToken = localStorage.getItem("refToken");
+    if (!refreshToken) throw new Error("Refresh token topilmadi");
 
-    const res = await axiosInstance.post(
+    const res = await axios.post(
       `${BASE_URL}${url}`,
       {},
       {
-        headers: {
-          Authorization: accessToken ? `Bearer ${accessToken}` : "",
-        },
-      }
+        headers: { Authorization: `Bearer ${JSON.parse(refreshToken)}` },
+      } 
     );
-
     return res?.data;
   } catch (error) {
-    throw new Error(error.message);
+    return Promise.reject(error); // Xatolikni qaytarish
   }
 };
 
-// Refresh request uchun React Query mutatsiyasi
-export const postRefreshMutation = (key) => {
+// Refresh token orqali API ga POST so‘rovini yuboruvchi mutatsiya
+export const postRefetchMutation = (key) => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: postRefresh,
-    onSuccess: (res) => {
-      if (res?.accToken) {
-        localStorage.setItem("access_token", res.accToken); // Yangi tokenni saqlash
-      }
-      queryClient.invalidateQueries([key]);
+    onSuccess: () => {
+      queryClient.invalidateQueries([key]); // Eski ma'lumotni yangilash
     },
   });
 };

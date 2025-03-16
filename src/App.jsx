@@ -1,18 +1,14 @@
 import React from "react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Loading from "./animation/loading";
-import AppRouter from "./routes";
-import ReactQueryProvider from "./context/ReactQueryProvider";
 import { AuthProvider } from "./context/auth";
+import ReactQueryProvider from "./context/react-query.provider";
+import IndexRouter from "./routes";
+
 
 const App = () => {
   return (
     <ReactQueryProvider>
       <AuthProvider>
-        {/* <ToastContainer /> */}
-        {/* <Loading /> */}
-        <AppRouter />
+        <IndexRouter />
       </AuthProvider>
     </ReactQueryProvider>
   );

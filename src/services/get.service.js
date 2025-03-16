@@ -1,19 +1,10 @@
+// import React from "react";
 import { axiosInstance } from "./token.service";
-
-
-const BASE_URI = import.meta.env.VITE_API;
+const BASE_URL = import.meta.env.VITE_API;
 
 export const getData = async (url) => {
   try {
-    const accessToken = localStorage.getItem("access_token"); // localStorage'dan token olish
-
-    const res = await axiosInstance.get(`${BASE_URI}${url}`, {
-      headers: {
-        Authorization: accessToken ? `Bearer ${accessToken}` : "",
-      },
-      withCredentials: true, // Cookie o‘rniga localStorage ishlatilmoqda, lekin credentials yuborish kerak bo‘lsa qoldiramiz
-    });
-
+    const res = await axiosInstance.get(`${BASE_URL}${url}`);   
     return res?.data;
   } catch (error) {
     return error?.response?.status;

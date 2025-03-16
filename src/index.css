@@ -1,0 +1,27 @@
+:root {
+  --chat-theme: light;
+  --chat-font: sans-serif;
+  --chat-back-img: url("https://wallpapers.com/images/hd/dark-city-background-ympe22eapcw8su8e.jpg");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.box {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  
+  /* BACKGROUND SETTINGS */
+  background-image: var(--chat-back-img);
+  background-repeat: no-repeat;
+  background-size: cover; /* Barcha ekranni qoplash */
+  background-position: center;
+}
