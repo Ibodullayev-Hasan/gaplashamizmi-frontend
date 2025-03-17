@@ -13,15 +13,23 @@
 .box {
   width: 100%;
   height: 100vh;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
   
   /* BACKGROUND SETTINGS */
   background-image: var(--chat-back-img);
   background-repeat: no-repeat;
-  background-size: cover; /* Barcha ekranni qoplash */
+  background-size: cover;
   background-position: center;
+}
+
+.children-box {
+  max-width: 99%;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  background-color: transparent; 
 }

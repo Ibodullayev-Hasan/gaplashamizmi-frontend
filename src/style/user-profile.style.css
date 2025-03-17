@@ -1,11 +1,29 @@
-:root {
-	--chat-theme: light;
-	--chat-font: sans-serif;
-	--chat-back-img: url('https://wallpapers.com/images/hd/dark-city-background-ympe22eapcw8su8e.jpg');
+.user-profile-container {
+	font-family: var(--chat-font);
+	width: 26%;
+	height: 96vh;
+	background-color: rgba(255, 255, 255, 0.369); /* Xira oq fon */
+	border-radius: 1rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
   }
   
-  .chat-container {
-	background-image: var(--chat-back-img);
-	font-family: var(--chat-font);
+  .user-profile {
+	text-align: center;
+  }
+  
+  .avatar {
+	width: 20vh;
+	height: 20vh;
+	border-radius: 50%;
+	border: 2px solid #ccc;
+	object-fit: cover;
+  }
+  
+  .user-profile p {
+	margin-top: 10px;
+	font-size: 16px;
+	font-weight: bold;
   }
   

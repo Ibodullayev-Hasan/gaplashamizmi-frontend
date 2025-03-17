@@ -12,14 +12,19 @@ const UserProfile = () => {
       const root = document.documentElement;
       root.style.setProperty("--chat-theme", user_profile.chat_theme);
       root.style.setProperty("--chat-font", user_profile.chat_font);
-      root.style.setProperty("--chat-back-img", `url(${user_profile.chat_back_img})`);
+      root.style.setProperty(
+        "--chat-back-img",
+        `url(${user_profile.chat_back_img})`
+      );
     }
   }, [user_profile]);
 
   return (
-    <div className="chat-container">
-      <img src={user?.avatar_uri} alt="Avatar" className="avatar" />
-      <p>Ismi: {user?.full_name}</p>
+    <div className="user-profile-container">
+      <div className="user-profile">
+        <img src={user?.avatar_uri} alt="Avatar" className="avatar" />
+        <p>Ismi: {user?.full_name}</p>
+      </div>
     </div>
   );
 };
