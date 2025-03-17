@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import "../style/chat.style.css"; // CSS faylni import qilamiz
+const BASE_URL = import.meta.env.VITE_API;
 
-const socket = io("http://localhost:3015/chat"); // NestJS serverga ulanish
+const socket = io(`${BASE_URL}/chat`);
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
@@ -53,7 +54,8 @@ const Chat = () => {
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.style.height = "auto"; // Avval balandlikni qayta tiklash
-      textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px"; // Matnga moslash
+      textAreaRef.current.style.height =
+        textAreaRef.current.scrollHeight + "px"; // Matnga moslash
     }
   }, [message]);
 
