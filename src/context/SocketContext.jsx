@@ -1,11 +1,12 @@
 import { createContext } from "react";
 import { io } from "socket.io-client";
 
-const SOCKET_URL = import.meta.env.SOCKET_URL; // API URL-ni o'zgartiring
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL; // To'g'ri o'qish
+console.log("Socket URL:", SOCKET_URL);
 
 export const socket = io(SOCKET_URL, {
-  autoConnect: false, // Avtomatik ulanmasligi uchun
-  transports: ["websocket"], // Faqat WebSocket orqali ulanish
+  autoConnect: false, // Avtomatik ulanmasin
+  transports: ["websocket"], // Faqat WebSocket ishlasin
 });
 
 export const SocketContext = createContext(socket);
