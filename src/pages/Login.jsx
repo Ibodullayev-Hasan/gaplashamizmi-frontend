@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/auth";
 import { postDataMutation } from "../services/post.service";
-import "../style/Login.css";
+import "../style/login.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -31,7 +31,6 @@ const Login = () => {
 
     try {
     } catch (error) {
-      console.log(error);
       return Promise.reject(error);
     }
   };

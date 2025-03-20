@@ -45,7 +45,7 @@ export const postRefresh = async ({ url }) => {
     );
     return res?.data;
   } catch (error) {
-    return Promise.reject(error); // Xatolikni qaytarish
+    return error
   }
 };
 

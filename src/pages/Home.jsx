@@ -1,12 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import UserProfile from "./UserProfile";
 import Chat from "./Chat";
+import Users from "./Users";
 
 const Home = () => {
+  const [selectedChatUser, setSelectedChatUser] = useState(null);
+
   return (
     <div className="box">
       <div className="children-box">
-        <Chat />
+        <Users onSelectUser={setSelectedChatUser} /> 
+        <Chat selectedChatUser={selectedChatUser} />
         <UserProfile />
       </div>
     </div>

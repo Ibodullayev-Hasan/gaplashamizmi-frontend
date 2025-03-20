@@ -1,94 +1,101 @@
-import React, { useEffect, useRef, useState } from "react";
-import io from "socket.io-client";
-import "../style/chat.style.css"; // CSS faylni import qilamiz
-const BASE_URL = import.meta.env.VITE_API;
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { SocketContext } from "../context/SocketContext";
+import "../style/chat.style.css";
+import { useAuth } from "../context/auth";
 
-const socket = io(`${BASE_URL}/chat`);
-
-const Chat = () => {
+const Chat = ({ selectedChatUser }) => { 
+  const socket = useContext(SocketContext);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
-  const chatBoxRef = useRef(null);
+  const chatBoxRef = useRef(null); // 🔹 Chat box uchun ref
   const textAreaRef = useRef(null);
+  const { data } = useAuth();
+  const currentUser = data?.data; 
 
   useEffect(() => {
-    socket.on("connection", (msg) => {
-      console.log("Ulanish: ", msg);
+    socket.connect();
+
+    socket.on("connect", () => {
+      console.log("✅ Serverga muvaffaqiyatli ulandik! Socket ID:", socket.id);
+
+      if (currentUser?.id) {
+        socket.emit("register", currentUser.id);
+        console.log(`🔹 Foydalanuvchi ro‘yxatdan o‘tkazildi: ${currentUser.id}`);
+      }
     });
 
-    socket.on("reply", (msg) => {
-      console.log("Serverdan kelgan xabar: ", msg);
-      setMessages((prev) => [...prev, { text: msg, sender: "server" }]);
+    socket.on("message", (msg) => {
+      console.log("📩 Qabul qilingan xabar:", msg);
+      setMessages((prev) => [...prev, msg]);
     });
 
     return () => {
-      socket.off("connection");
-      socket.off("reply");
+      console.log("🔴 Socket uzildi");
+      socket.disconnect();
     };
-  }, []);
+  }, [socket, currentUser]);
 
-  const sendMessage = () => {
-    if (message.trim()) {
-      socket.emit("sendMessage", message);
-      setMessages((prev) => [...prev, { text: message, sender: "user" }]);
-      setMessage("");
-    }
-  };
-
-  // Enter bosilganda xabar jo‘natish
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  };
-
-  // Har yangi xabar qo‘shilganda avtomatik pastga skroll qilish
+  // 🔽 Har safar yangi xabar qo'shilganda chatni eng pastga skroll qilamiz
   useEffect(() => {
     if (chatBoxRef.current) {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
     }
   }, [messages]);
 
-  // Textarea balandligini matn uzunligiga qarab moslashtirish
-  useEffect(() => {
-    if (textAreaRef.current) {
-      textAreaRef.current.style.height = "auto"; // Avval balandlikni qayta tiklash
-      textAreaRef.current.style.height =
-        textAreaRef.current.scrollHeight + "px"; // Matnga moslash
+  const sendMessage = () => {
+    if (!selectedChatUser) {
+      console.log("⚠️ Hech qanday foydalanuvchi tanlanmagan!");
+      return;
     }
-  }, [message]);
+
+    if (!currentUser) {
+      console.log("❌ Xatolik: Login qilgan foydalanuvchi mavjud emas!");
+      return;
+    }
+
+    if (message.trim()) {
+      const senderId = currentUser.id;
+      const receiverId = selectedChatUser?.id || "Noma’lum foydalanuvchi";
+
+      console.log("📤 Yuborilayotgan xabar:", message, "| Sender ID:", senderId, "| Receiver ID:", receiverId);
+      socket.emit("send", { senderId, receiverId, text: message });
+
+      setMessages((prev) => [...prev, { text: message, senderId }]);
+      setMessage("");
+    }
+  };
 
   return (
     <div className="chat-container">
-      <div className="chat-box" ref={chatBoxRef}>
-        {messages.map((msg, index) => (
-          <div key={index} className="message-container">
-            <div
-              className={
-                msg.sender === "user" ? "user-message" : "server-message"
-              }
-            >
-              {msg.text}
-            </div>
+      {selectedChatUser ? (
+        <>
+          <div className="chat-box" ref={chatBoxRef}> 
+            {messages.map((msg, index) => (
+              <div key={index} className="message-container">
+                <div className={msg.senderId === currentUser?.id ? "user-message" : "server-message"}>
+                  {msg.text}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      <div className="chat-input-container">
-        <textarea
-          ref={textAreaRef}
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Xabar yozing..."
-          className="chat-input"
-          rows="2"
-        />
-
-        <button onClick={sendMessage} className="chat-button">
-          Jo‘natish
-        </button>
-      </div>
+          <div className="chat-input-container">
+            <textarea
+              ref={textAreaRef}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Xabar yozing..."
+              className="chat-input"
+              rows="1.5"
+            />
+            <button onClick={sendMessage} className="chat-button">
+              🚀 
+            </button>
+          </div>
+        </>
+      ) : (
+        <p>❗ Chat boshlash uchun foydalanuvchini tanlang!</p>
+      )}
     </div>
   );
 };

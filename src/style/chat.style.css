@@ -1,8 +1,8 @@
 .chat-container {
-	width: 60%;
+	width: 48%;
 	height: 96vh;
 	padding: 10px;
-	border-radius: 10px;
+	border-radius: 0;
 	background-color: rgba(255, 255, 255, 0.369);
 	font-family: var(--chat-font);
 	display: flex;
@@ -38,8 +38,8 @@
 	max-width: 50%;
 	padding: 12px 16px;
 	border-radius: 18px;
-	font-size: 0.92em;
-	line-height: 1.4em;
+	font-size: 0.9em;
+	line-height: 1.8em;
 	text-align: left;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
@@ -97,10 +97,10 @@
 /* Input qismi */
 .chat-input-container {
 	display: flex;
-	align-items: flex-end;
+	align-items: center;
 	border-top: 1px solid #ccc;
 	background: transparent;
-	min-height: 50px;
+	max-height: 50px;
 	position: relative;
 	z-index: 100;
 }
@@ -115,7 +115,7 @@
 	overflow-y: auto;
 	min-height: 40px;
 	max-height: 150px;
-	line-height: 1.4em;
+	/* line-height: 1.8em; */
 }
 
 .chat-input::-webkit-scrollbar {
@@ -127,7 +127,8 @@
 	background-color: rgb(255, 132, 0);
 	border: none;
 	color: white;
-	padding: 10px 15px;
+	font-size: 1.5rem;
+	padding: 5px 10px;
 	margin-left: 10px;
 	border-radius: 1rem;
 	cursor: pointer;

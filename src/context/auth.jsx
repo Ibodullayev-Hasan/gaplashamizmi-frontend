@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
     enabled: !!token,
   });
 
-  // console.log(data);
+  console.log(data);
 
   // Xatoliklar bo‘lsa, tokenni yangilash yoki foydalanuvchini chiqarish
   useEffect(() => {
@@ -45,18 +45,19 @@ export const AuthProvider = ({ children }) => {
           },
           {
             onSuccess: (res) => {
+              
+              if (res?.status === 403 || res?.status === 401) {
+                setToken(null);
+                router("/");
+              }
+
               if (res?.data.accToken) {
                 localStorage.setItem("accToken", JSON.stringify(res?.data.accToken));
                 setToken(res?.data.accToken);
                 refetch();
               }
-              if (res?.status === 403) {
-                setToken(null);
-                router("/");
-              }
             },
             onError: (error) => {
-              console.error(error);
               throw new Error(error.message);
             },
           }

@@ -1,5 +1,4 @@
 :root {
-  --chat-theme: light;
   --chat-font: sans-serif;
   --chat-back-img: url("https://wallpapers.com/images/hd/dark-city-background-ympe22eapcw8su8e.jpg");
 }
@@ -8,6 +7,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: var(--chat-font);
+
 }
 
 .box {
@@ -19,6 +20,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+
 }
 
 .children-box {
@@ -29,7 +31,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content:center;
   overflow: hidden;
   background-color: transparent; 
 }
