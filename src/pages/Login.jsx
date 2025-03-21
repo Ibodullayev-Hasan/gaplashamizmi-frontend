@@ -5,6 +5,8 @@ import "../style/login.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
   const { token, setToken } = useAuth();
   const { mutate: userLogin } = postDataMutation("user");
 
@@ -14,25 +16,23 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     userLogin(
       { url: "auth/login", body: formData },
       {
         onSuccess: (res) => {
           if (res?.data.accToken) {
-                       
             setToken(res?.data.accToken);
             localStorage.setItem("accToken", JSON.stringify(res?.data.accToken));
             localStorage.setItem("refToken", JSON.stringify(res?.data.refToken));
           }
         },
+        onError: (err) => {
+          setError(err.response?.data?.message || "Xatolik yuz berdi");
+        },
       }
     );
-
-    try {
-    } catch (error) {
-      return Promise.reject(error);
-    }
   };
 
   return (
@@ -49,19 +49,30 @@ const Login = () => {
               onChange={handleChange}
               placeholder="Emailni kiriting"
               required
+              className={error ? "error-input" : ""}
             />
           </div>
-          <div className="input-group">
+          <div className="input-group password-group">
             <label>Parol</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Parolni kiriting"
-              required
-            />
+            <div className="password-container">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Parolni kiriting"
+                required
+                className={error ? "error-input" : ""}
+              />
+              <span
+                className="toggle-password"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <i className={`fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"}`}></i>
+              </span>
+            </div>
           </div>
+          {error && <p className="error-message">{error}</p>}
           <button type="submit" id="login-button">
             Kirish
           </button>

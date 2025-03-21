@@ -138,3 +138,23 @@
 .chat-button:hover {
 	background-color: rgb(255, 89, 0);
 }
+
+
+/* Responsive */
+@media (max-width: 1024px) {
+	.chat-container {
+	  width: 65%;
+	}
+  }
+  
+  @media (max-width: 768px) {
+	.chat-container {
+	  width: 100%;
+	  height: auto;
+	  padding: 5px;
+	}
+  
+	.user-message, .server-message {
+	  max-width: 70%;
+	}
+  }

@@ -1,31 +1,74 @@
 .user-profile-container {
-	font-family: var(--chat-font);
-	width: 24%;
-	height: 96vh;
-	background-color: rgba(255, 255, 255, 0.843); /* Xira oq fon */
-	border-radius: 1rem;
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  font-family: var(--chat-font);
+  width: 24%;
+  height: 96vh;
+  background-color: rgba(255, 255, 255, 0.843); /* Xira oq fon */
+  border-radius: 1rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.user-profile {
+  text-align: center;
+}
+
+.avatar {
+  width: 20vh;
+  height: 20vh;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  object-fit: cover;
+}
+
+.user-profile p {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Hamburger menyu tugmasi */
+.menu-btn {
+  display: none;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Kichik ekranda profili yashiramiz */
+@media (max-width: 768px) {
+  .user-profile-container {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 60%;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.95);
+    z-index: 1000;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease-in-out;
   }
-  
-  .user-profile {
-	text-align: center;
+
+  /* Menyu tugmasini ko‘rsatamiz */
+  .menu-btn {
+    display: block;
+    z-index: 1100;
   }
-  
+
   .avatar {
-	width: 20vh;
-	height: 20vh;
-	border-radius: 50%;
-	border: 2px solid #ccc;
-	object-fit: cover;
+    width: 15vh;
+    height: 15vh;
   }
-  
-  .user-profile p {
-	margin-top: 10px;
-	font-size: 16px;
-	font-weight: bold;
+
+  /* Agar `.open` klassi bo‘lsa, ko‘rinadi */
+  .user-profile-container.open {
+    right: 0;
   }
-  
+}

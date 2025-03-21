@@ -5,9 +5,8 @@ import { getData } from "../services/get.service";
 import "../style/users.style.css";
 import { useAuth } from "../context/auth";
 
-const Users = ({ onSelectUser }) => {
-  const { refetch } = useAuth(); // ✅ useAuth() ni eng yuqori darajada chaqiramiz
-
+const Users = ({ onSelectUser, selectedChatUser }) => {
+  const { refetch } = useAuth();
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -24,8 +23,8 @@ const Users = ({ onSelectUser }) => {
         const response = await getData(`users/name/${query}`);
 
         if (response?.status === 401) {
-          await refetch(); // Tokenni yangilash
-          return fetchUsers(); // Qayta chaqirish
+          await refetch();
+          return fetchUsers();
         }
 
         setUsers(
@@ -39,15 +38,18 @@ const Users = ({ onSelectUser }) => {
       }
     };
 
-    fetchUsers(); // ✅ useEffect ichida fetchUsers chaqiriladi
-  }, [query, refetch]); // 🔥 query va refetch'ga bog‘liq
+    fetchUsers();
+  }, [query, refetch]);
+
+  // 🔥 Agar foydalanuvchi tanlangan bo‘lsa, users ro‘yxatini yashiramiz
+  if (selectedChatUser) return null;
 
   return (
     <div className="users-section">
       <div className="search-box">
         <input
-          type="text"
           id="search-input"
+          type="text"
           placeholder="Search..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -62,16 +64,8 @@ const Users = ({ onSelectUser }) => {
           {!loading && users.length === 0 && <p>Hech narsa topilmadi</p>}
           <ul>
             {users.map((user) => (
-              <li
-                key={user.id}
-                className="user-item"
-                onClick={() => onSelectUser(user)}
-              >
-                <img
-                  src={user.avatar_uri}
-                  alt={user.full_name}
-                  className="user-avatar"
-                />
+              <li key={user.id} className="user-item" onClick={() => onSelectUser(user)}>
+                <img src={user.avatar_uri} alt={user.full_name} className="user-avatar" />
                 <span className="user-name">{user.full_name}</span>
               </li>
             ))}
@@ -83,4 +77,3 @@ const Users = ({ onSelectUser }) => {
 };
 
 export default Users;
-

@@ -13,13 +13,13 @@
 .box {
   width: 100%;
   height: 100vh;
-  
-  /* BACKGROUND SETTINGS */
   background-image: var(--chat-back-img);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .children-box {
@@ -30,7 +30,22 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content:center;
+  justify-content: center;
   overflow: hidden;
-  background-color: transparent; 
+  background-color: transparent;
 }
+
+/* 🔹 Chat butun ekranni egallashi faqat 400px–600px oralig‘ida */
+@media (min-width: 400px) and (max-width: 600px) {
+  .mobile-chat-active {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .mobile-chat-active > :not(:nth-child(2)) { /* Faqat `Chat` ko‘rinadi */
+    display: none;
+  }
+}
+
