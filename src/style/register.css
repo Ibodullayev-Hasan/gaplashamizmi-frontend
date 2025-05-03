@@ -1,5 +1,5 @@
 /* General Styles */
-#login-container {
+#register-container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -8,9 +8,9 @@
 	padding: 20px;
 	position: relative;
 	overflow: hidden;
-  }
-  
-  #login-container::before {
+}
+
+#register-container::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -18,24 +18,23 @@
 	width: 100%;
 	height: 100%;
 	background: linear-gradient(135deg, #e52d27, #ff8c00);
-
 	z-index: -1;
 	animation: backgroundMove 6s infinite alternate ease-in-out;
-  }
-  
-  @keyframes backgroundMove {
+}
+
+@keyframes backgroundMove {
 	0% {
-	  transform: scale(1);
+		transform: scale(1);
 	}
 	100% {
-	  transform: scale(1.1);
+		transform: scale(1.1);
 	}
-  }
-  
-  #login-box {
+}
+
+#register-box {
 	background: rgba(255, 255, 255, 0.2);
-	/* backdrop-filter: blur(0px); */
 	padding: 2rem;
+	margin-bottom: 2%;
 	border-radius: 12px;
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 	width: 100%;
@@ -44,40 +43,40 @@
 	transition: transform 0.3s ease, box-shadow 0.3s ease;
 	position: relative;
 	z-index: 1;
-  }
-  
-  #login-box:hover {
+}
+
+#register-box:hover {
 	transform: translateY(-5px) scale(1.02);
 	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-  }
-  
-  #login-title {
+}
+
+#register-title {
 	font-size: 26px;
 	font-weight: bold;
 	color: #ffffff;
-	margin-bottom: 1.5rem;
-  }
-  
-  /* Form Styles */
-  #login-form {
+	margin-bottom: 2rem;
+}
+
+/* Form Styles */
+#register-form {
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
-  }
-  
-  .input-group {
+}
+
+.input-group {
 	text-align: left;
-  }
-  
-  .input-group label {
+}
+
+.input-group label {
 	display: block;
 	font-size: 14px;
 	font-weight: 500;
 	color: #ffffff;
 	margin-bottom: 6px;
-  }
-  
-  .input-group input {
+}
+
+.input-group input {
 	width: 100%;
 	padding: 12px;
 	font-size: 14px;
@@ -87,59 +86,58 @@
 	border-radius: 8px;
 	outline: none;
 	transition: all 0.3s ease;
-  }
-  
-  .input-group input::placeholder {
+}
+
+.input-group input::placeholder {
 	color: rgba(255, 255, 255, 0.7);
-  }
-  
-  .input-group input:focus {
+}
+
+.input-group input:focus {
 	border-color: #16a085;
 	box-shadow: 0 0 8px rgba(22, 160, 133, 0.5);
 	backdrop-filter: none;
-  }
+}
 
-  .password-container {
+.password-container {
 	position: relative;
 	display: flex;
 	align-items: center;
-  }
-  
-  .password-container input {
+}
+
+.password-container input {
 	width: 100%;
-	padding-right: 40px; /* Ikkon uchun joy qoldirish */
-  }
-  
-  .toggle-password {
+	padding-right: 40px;
+}
+
+.toggle-password {
 	position: absolute;
 	right: 10px;
 	cursor: pointer;
 	color: #888;
-  }
-  
-  .toggle-password:hover {
+}
+
+.toggle-password:hover {
 	color: #555;
-  }
-  
-  
-  /* Button Styles */
-  #login-button {
+}
+
+/* Button Styles */
+#register-button {
 	width: 60%;
 	padding: 12px;
 	font-size: 16px;
 	font-weight: bold;
-	background:#e52d27;
+	background: #e52d27;
 	color: white;
 	border: none;
 	border-radius: .9rem;
-	margin: 1% auto;
+	margin: 2% auto;
 	cursor: pointer;
 	transition: all 0.3s ease, transform 0.2s ease;
 	position: relative;
 	overflow: hidden;
-  }
-  
-  #login-button::after {
+}
+
+#register-button::after {
 	content: "";
 	position: absolute;
 	top: 50%;
@@ -149,22 +147,22 @@
 	background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 50%);
 	transition: all 0.4s ease;
 	transform: translate(-50%, -50%) scale(0);
-  }
-  
-  #login-button:hover::after {
+}
+
+#register-button:hover::after {
 	transform: translate(-50%, -50%) scale(1);
-  }
-  
-  #login-button:hover {
+}
+
+#register-button:hover {
 	background: #ff3300;
 	transform: scale(1.05);
-  }
-  
-  #login-button:active {
-	transform: scale(0.98);
-  }
+}
 
-  .button-navigate {
+#register-button:active {
+	transform: scale(0.98);
+}
+
+.button-navigate {
 	margin: 0;
 	background: none;
 	border: none;
@@ -173,18 +171,16 @@
 	cursor: pointer;
 	text-decoration: underline;
 	padding: 0;
-  }
-  
-  .button-navigate:hover {
+}
+
+.button-navigate:hover {
 	color: #0d47a1;
 	text-decoration: none;
-  }
-  
-  
-  /* Responsive Design */
-  @media (max-width: 480px) {
-	#login-box {
-	  padding: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+	#register-box {
+		padding: 1.5rem;
 	}
-  }
-  
+}

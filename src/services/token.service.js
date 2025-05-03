@@ -8,12 +8,15 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
-      const accessToken = localStorage.getItem("accToken")
-        ? JSON.parse(localStorage.getItem("accToken"))
-        : null;
-
-      if (accessToken) {
-        config.headers.Authorization = `Bearer ${accessToken}`;
+      try {
+        const rawToken = localStorage.getItem("accToken");
+        if (rawToken && rawToken !== "undefined") {
+          const accessToken = JSON.parse(rawToken);
+          config.headers.Authorization = `Bearer ${accessToken}`;
+        }
+      } catch (e) {
+        console.warn("Token JSON.parse() xato:", e.message);
+        localStorage.removeItem("accToken");
       }
     }
     return config;
@@ -22,3 +25,4 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+

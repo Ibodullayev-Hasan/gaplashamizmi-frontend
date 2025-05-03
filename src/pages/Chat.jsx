@@ -16,21 +16,17 @@ const Chat = ({ selectedChatUser }) => {
     socket.connect();
 
     socket.on("connect", () => {
-      console.log("✅ Serverga muvaffaqiyatli ulandik! Socket ID:", socket.id);
 
       if (currentUser?.id) {
         socket.emit("register", currentUser.id);
-        console.log(`🔹 Foydalanuvchi ro‘yxatdan o‘tkazildi: ${currentUser.id}`);
       }
     });
 
     socket.on("message", (msg) => {
-      console.log("📩 Qabul qilingan xabar:", msg);
       setMessages((prev) => [...prev, msg]);
     });
 
     return () => {
-      console.log("🔴 Socket uzildi");
       socket.disconnect();
     };
   }, [socket, currentUser]);
@@ -44,12 +40,10 @@ const Chat = ({ selectedChatUser }) => {
 
   const sendMessage = () => {
     if (!selectedChatUser) {
-      console.log("⚠️ Hech qanday foydalanuvchi tanlanmagan!");
       return;
     }
 
     if (!currentUser) {
-      console.log("❌ Xatolik: Login qilgan foydalanuvchi mavjud emas!");
       return;
     }
 
@@ -57,7 +51,6 @@ const Chat = ({ selectedChatUser }) => {
       const senderId = currentUser.id;
       const receiverId = selectedChatUser?.id || "Noma’lum foydalanuvchi";
 
-      console.log("📤 Yuborilayotgan xabar:", message, "| Sender ID:", senderId, "| Receiver ID:", receiverId);
       socket.emit("send", { senderId, receiverId, text: message });
 
       setMessages((prev) => [...prev, { text: message, senderId }]);

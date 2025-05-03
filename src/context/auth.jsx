@@ -26,8 +26,6 @@ export const AuthProvider = ({ children }) => {
     enabled: !!token,
   });
 
-  console.log(data);
-
   // Xatoliklar bo‘lsa, tokenni yangilash yoki foydalanuvchini chiqarish
   useEffect(() => {
     if (data === 403 || data === 404) {
@@ -36,7 +34,16 @@ export const AuthProvider = ({ children }) => {
     }
 
     if (data == 401) {
-      const refreshToken = JSON.parse(localStorage.getItem("refToken"));
+      const rawRefToken = localStorage.getItem("refToken");
+      
+      const refreshToken =
+        rawRefToken && rawRefToken !== "undefined"
+          ? JSON.parse(rawRefToken)
+          : null;
+
+      if (!refreshToken) {
+        router("/login");
+      }
 
       if (refreshToken) {
         postRefresh(
@@ -45,14 +52,16 @@ export const AuthProvider = ({ children }) => {
           },
           {
             onSuccess: (res) => {
-              
               if (res?.status === 403 || res?.status === 401) {
                 setToken(null);
-                router("/");
+                router("/login");
               }
 
               if (res?.data.accToken) {
-                localStorage.setItem("accToken", JSON.stringify(res?.data.accToken));
+                localStorage.setItem(
+                  "accToken",
+                  JSON.stringify(res?.data.accToken)
+                );
                 setToken(res?.data.accToken);
                 refetch();
               }
@@ -64,6 +73,7 @@ export const AuthProvider = ({ children }) => {
         );
       }
     }
+    
   }, [data]);
 
   return (

@@ -1,46 +1,49 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/auth";
 import { postDataMutation } from "../services/post.service";
-import "../style/login.css";
+import "../style/register.css";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+const Register = () => {
+  const [formData, setFormData] = useState({
+    full_name: "",
+    email: "",
+    password: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  const { token, setToken } = useAuth();
-  const { mutate: userLogin } = postDataMutation("user");
+  const { setToken } = useAuth();
+  const { mutate: userRegister } = postDataMutation("user");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
 
-    userLogin(
-      { url: "auth/login", body: formData },
+    userRegister(
+      { url: "auth/register", body: formData },
       {
         onSuccess: (res) => {
           if (res?.data.accToken) {
-            setToken(res?.data.accToken);
-            localStorage.setItem(
-              "accToken",
-              JSON.stringify(res?.data.accToken)
-            );
-            localStorage.setItem(
-              "refToken",
-              JSON.stringify(res?.data.refToken)
-            );
+            setToken(res.data.accToken);
+            localStorage.setItem("accToken", JSON.stringify(res.data.accToken));
+            localStorage.setItem("refToken", JSON.stringify(res.data.refToken));
+            navigate("/");
           }
         },
         onError: (err) => {
-
+          console.log(err.response?.data?.error);
           setError(
-            err.response?.data?.error ||
-              err.response?.data?.error?.message?.[0]?.constraints?.isEmail ||
+            err.response?.data?.error?.message?.[0]?.constraints?.[
+              Object.keys(
+                err.response?.data?.error?.message?.[0]?.constraints || {}
+              )[0]
+            ] ||
+              err.response?.data?.error ||
               "Xatolik yuz berdi"
           );
         },
@@ -49,10 +52,22 @@ const Login = () => {
   };
 
   return (
-    <div id="login-container">
-      <div id="login-box">
-        <h2 id="login-title">Kirish</h2>
-        <form onSubmit={handleSubmit} id="login-form">
+    <div id="register-container">
+      <div id="register-box">
+        <h2>Ro'yxatdan o'tish</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <label>To'liq ismingiz</label>
+            <input
+              type="text"
+              name="full_name"
+              value={formData.full_name}
+              onChange={handleChange}
+              placeholder="Ismingizni kiriting"
+              required
+              className={error ? "error-input" : ""}
+            />
+          </div>
           <div className="input-group">
             <label>Email</label>
             <input
@@ -90,18 +105,17 @@ const Login = () => {
             </div>
           </div>
           {error && <p className="error-message">{error}</p>}
-          <button type="submit" id="login-button">
-            Kirish
+          <button type="submit" id="register-button">
+            Register
           </button>
         </form>
         <p>
-          Don't have an account?
+          Do you already have an account?
           <button
-            type="button"
-            onClick={() => navigate("/register")}
+            onClick={() => navigate("/login")}
             className="button-navigate"
           >
-            Register
+            Kirish
           </button>
         </p>
       </div>
@@ -109,4 +123,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
