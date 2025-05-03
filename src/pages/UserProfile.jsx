@@ -12,16 +12,17 @@ const UserProfile = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (user_profile) {
+    if (user_profile?.chat_back_img) {
       const root = document.documentElement;
-      root.style.setProperty("--chat-theme", user_profile.chat_theme);
-      root.style.setProperty("--chat-font", user_profile.chat_font);
-      root.style.setProperty(
-        "--chat-back-img",
-        `url(${user_profile.chat_back_img})`
-      );
+      root.style.setProperty("--chat-theme", user_profile.chat_theme || "#fff");
+      root.style.setProperty("--chat-font", user_profile.chat_font || "Arial, sans-serif");
+  
+      // URL'ni to'g'ri formatda yozish
+      root.style.setProperty("--chat-back-img", `url("${user_profile.chat_back_img}")`);
     }
   }, [user_profile]);
+  
+  
 
   return (
     <>

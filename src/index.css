@@ -1,6 +1,6 @@
 :root {
   --chat-font: sans-serif;
-  --chat-back-img: url("https://wallpapers.com/images/hd/dark-city-background-ympe22eapcw8su8e.jpg");
+  --deafault-chat-back: linear-gradient(135deg, #e52d27, #ff8c00);
 }
 
 * {
@@ -13,7 +13,7 @@
 .box {
   width: 100%;
   height: 100vh;
-  background-image: var(--chat-back-img);
+  background-color: var(--deafault-chat-back);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -43,9 +43,9 @@
     width: 100%;
     height: 100vh;
   }
-  
-  .mobile-chat-active > :not(:nth-child(2)) { /* Faqat `Chat` ko‘rinadi */
+
+  .mobile-chat-active > :not(:nth-child(2)) {
+    /* Faqat `Chat` ko‘rinadi */
     display: none;
   }
 }
-

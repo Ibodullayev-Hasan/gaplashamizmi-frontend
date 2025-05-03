@@ -1,3 +1,15 @@
+:root {
+  --chat-back-img: url("https://thumbs.6sqft.com/wp-content/uploads/2022/01/10130734/NYC-at-night-skyline.jpg");
+}
+
+body {
+  background-image: var(--chat-back-img);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
 .user-profile-container {
   font-family: var(--chat-font);
   width: 24%;

@@ -24,12 +24,24 @@ const Login = () => {
         onSuccess: (res) => {
           if (res?.data.accToken) {
             setToken(res?.data.accToken);
-            localStorage.setItem("accToken", JSON.stringify(res?.data.accToken));
-            localStorage.setItem("refToken", JSON.stringify(res?.data.refToken));
+            localStorage.setItem(
+              "accToken",
+              JSON.stringify(res?.data.accToken)
+            );
+            localStorage.setItem(
+              "refToken",
+              JSON.stringify(res?.data.refToken)
+            );
           }
         },
         onError: (err) => {
-          setError(err.response?.data?.message || "Xatolik yuz berdi");
+          console.log(err.response?.data?.error);
+
+          setError(
+            err.response?.data?.error ||
+              err.response?.data?.error?.message?.[0]?.constraints?.isEmail ||
+              "Xatolik yuz berdi"
+          );
         },
       }
     );
@@ -68,7 +80,11 @@ const Login = () => {
                 className="toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                <i className={`fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"}`}></i>
+                <i
+                  className={`fa-solid ${
+                    showPassword ? "fa-eye-slash" : "fa-eye"
+                  }`}
+                ></i>
               </span>
             </div>
           </div>
