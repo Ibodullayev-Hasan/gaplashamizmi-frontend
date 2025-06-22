@@ -37,12 +37,9 @@ const Login = () => {
           }
         },
         onError: (err) => {
-
-          setError(
-            err.response?.data?.error ||
-              err.response?.data?.error?.message?.[0]?.constraints?.isEmail ||
-              "Xatolik yuz berdi"
-          );
+          console.log(err);
+          
+          setError(err.response?.data?.error?.message || "Xatolik yuz berdi");
         },
       }
     );

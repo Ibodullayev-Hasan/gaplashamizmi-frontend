@@ -26,7 +26,7 @@ const Users = ({ onSelectUser, selectedChatUser }) => {
           await refetch();
           return fetchUsers();
         }
-
+        
         setUsers(
           response?.success && Array.isArray(response.data) ? response.data : []
         );
