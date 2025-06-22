@@ -25,7 +25,7 @@ const Register = () => {
     setError("");
 
     userRegister(
-      { url: "auth/register", body: formData },
+      { url: "auth/sign-up", body: formData },
       {
         onSuccess: (res) => {
           if (res?.data.accToken) {
