@@ -23,8 +23,14 @@ const UserProfile = () => {
     if (user_profile?.chat_back_img) {
       const root = document.documentElement;
       root.style.setProperty("--chat-theme", user_profile.chat_theme || "#fff");
-      root.style.setProperty("--chat-font", user_profile.chat_font || "Arial, sans-serif");
-      root.style.setProperty("--chat-back-img", `url("${user_profile.chat_back_img}")`);
+      root.style.setProperty(
+        "--chat-font",
+        user_profile.chat_font || "Arial, sans-serif"
+      );
+      root.style.setProperty(
+        "--chat-back-img",
+        `url("${user_profile.chat_back_img}")`
+      );
     }
   }, [user_profile]);
 
@@ -36,8 +42,11 @@ const UserProfile = () => {
 
       <div className={`user-profile-container ${isOpen ? "open" : ""}`}>
         <div className="user-profile">
-          <img src={user?.avatar_uri} alt="Avatar" className="avatar" />
-          <p>Name: {user?.full_name}</p>
+          <img src={user?.avatar_uri} alt="user avatar" className="avatar" />
+          <p>
+            Hi 👋
+            <span className="user-name">{user ? user.full_name : "Guest"}</span>
+          </p>
 
           {/* Log out tugmasi */}
           <button className="logout-btn" onClick={handleLogout}>

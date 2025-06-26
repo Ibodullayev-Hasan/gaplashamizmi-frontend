@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/auth";
 import { postDataMutation } from "../services/post.service";
 import "../style/login.css";
@@ -7,10 +7,23 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [globalError, setGlobalError] = useState("");
+
   const { token, setToken } = useAuth();
   const { mutate: userLogin } = postDataMutation("user");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (globalError) {
+      const timer = setTimeout(() => {
+        setGlobalError("");
+      }, 4000); // 4 sekunddan keyin yo‘qoladi
+
+      return () => clearTimeout(timer);
+    }
+  }, [globalError]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,7 +31,8 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setFieldErrors({});
+    setGlobalError("");
 
     userLogin(
       { url: "auth/login", body: formData },
@@ -37,9 +51,26 @@ const Login = () => {
           }
         },
         onError: (err) => {
-          console.log(err);
-          
-          setError(err.response?.data?.error?.message || "Xatolik yuz berdi");
+          const response = err.response?.data;
+
+          if (Array.isArray(response?.message?.message)) {
+            const errorMap = {};
+            response.message.message.forEach((msg) => {
+              const lower = msg.toLowerCase();
+              if (lower.includes("email")) errorMap.email = msg;
+              if (lower.includes("parol")) errorMap.password = msg;
+              if (lower.includes("6")) errorMap.password = msg;
+            });
+            setFieldErrors(errorMap);
+            return;
+          }
+
+          if (typeof response?.message?.message === "string") {
+            setGlobalError(response.message.message);
+            return;
+          }
+
+          setGlobalError("Nomaʼlum xatolik yuz berdi");
         },
       }
     );
@@ -47,9 +78,15 @@ const Login = () => {
 
   return (
     <div id="login-container">
+      {/* flesh message */}
+      {globalError && <div className="flash-error-login">{globalError}</div>}
       <div id="login-box">
+        {/* login title */}
         <h2 id="login-title">Kirish</h2>
+
+        {/* forma */}
         <form onSubmit={handleSubmit} id="login-form">
+          {/* Email */}
           <div className="input-group">
             <label>Email</label>
             <input
@@ -57,11 +94,16 @@ const Login = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Emailni kiriting"
               required
-              className={error ? "error-input" : ""}
+              placeholder="Emailni kiriting"
+              className={fieldErrors.email ? "error-input" : ""}
             />
+            {fieldErrors.email && (
+              <p className="field-error-login">{fieldErrors.email}</p>
+            )}
           </div>
+
+          {/* Password */}
           <div className="input-group password-group">
             <label>Parol</label>
             <div className="password-container">
@@ -70,9 +112,9 @@ const Login = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Parolni kiriting"
                 required
-                className={error ? "error-input" : ""}
+                placeholder="Parolni kiriting"
+                className={fieldErrors.password ? "error-input" : ""}
               />
               <span
                 className="toggle-password"
@@ -82,11 +124,15 @@ const Login = () => {
                   className={`fa-solid ${
                     showPassword ? "fa-eye-slash" : "fa-eye"
                   }`}
-                ></i>
+                />
               </span>
             </div>
+            {fieldErrors.password && (
+              <p className="field-error-login">{fieldErrors.password}</p>
+            )}
           </div>
-          {error && <p className="error-message">{error}</p>}
+
+          {/* login button */}
           <button type="submit" id="login-button">
             Kirish
           </button>

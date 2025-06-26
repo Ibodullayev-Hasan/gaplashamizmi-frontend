@@ -87,7 +87,7 @@ const Chat = ({ selectedChatUser }) => {
           </div>
         </>
       ) : (
-        <p>❗ Chat boshlash uchun foydalanuvchini tanlang!</p>
+        <p>Kim bilandir gaplashamizmi? 😄 </p>
       )}
     </div>
   );

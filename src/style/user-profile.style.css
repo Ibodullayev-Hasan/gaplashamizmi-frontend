@@ -42,6 +42,12 @@ body {
   font-weight: bold;
 }
 
+.user-name{
+  color: darkblue;
+  position: relative;
+  left: 10px;
+}
+
 /* Hamburger menyu tugmasi */
 .menu-btn {
   display: none;

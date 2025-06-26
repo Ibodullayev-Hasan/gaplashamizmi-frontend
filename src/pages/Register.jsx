@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/auth";
 import { postDataMutation } from "../services/post.service";
 import "../style/register.css";
@@ -10,19 +10,36 @@ const Register = () => {
     email: "",
     password: "",
   });
+
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [globalError, setGlobalError] = useState("");
+
   const { setToken } = useAuth();
   const { mutate: userRegister } = postDataMutation("user");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log(globalError);
+    
+    if (globalError) {
+      const timer = setTimeout(() => {
+        setGlobalError("");
+      }, 4000); // 4 sekunddan keyin yo‘qoladi
+
+      return () => clearTimeout(timer);
+    }
+  }, [globalError]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFieldErrors((prev) => ({ ...prev, [e.target.name]: "" }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
+    setFieldErrors({});
+    setGlobalError("");
 
     userRegister(
       { url: "auth/sign-up", body: formData },
@@ -35,17 +52,30 @@ const Register = () => {
             navigate("/");
           }
         },
+
+        // Error
         onError: (err) => {
-          console.log(err.response?.data?.error);
-          setError(
-            err.response?.data?.error?.message?.[0]?.constraints?.[
-              Object.keys(
-                err.response?.data?.error?.message?.[0]?.constraints || {}
-              )[0]
-            ] ||
-              err.response?.data?.error ||
-              "Xatolik yuz berdi"
-          );
+          const response = err.response?.data;
+
+          if (Array.isArray(response?.message?.message)) {
+            const errorMap = {};
+            response.message.message.forEach((msg) => {
+              const lower = msg.toLowerCase();
+              if (lower.includes("full_name")) errorMap.full_name = msg;
+              if (lower.includes("email")) errorMap.email = msg;
+              if (lower.includes("parol")) errorMap.password = msg;
+              if (lower.includes("6")) errorMap.password = msg;
+            });
+            setFieldErrors(errorMap);
+            return;
+          }
+
+          if (typeof response?.message?.message === "string") {
+            setGlobalError(response.message.message);
+            return;
+          }
+
+          setGlobalError("Nomaʼlum xatolik yuz berdi");
         },
       }
     );
@@ -53,9 +83,13 @@ const Register = () => {
 
   return (
     <div id="register-container">
+      {/* flesh message */}
+      {globalError && <div className="flash-error-register">{globalError}</div>}
       <div id="register-box">
         <h2>Ro'yxatdan o'tish</h2>
+
         <form onSubmit={handleSubmit}>
+          {/* Full Name */}
           <div className="input-group">
             <label>To'liq ismingiz</label>
             <input
@@ -64,10 +98,14 @@ const Register = () => {
               value={formData.full_name}
               onChange={handleChange}
               placeholder="Ismingizni kiriting"
-              required
-              className={error ? "error-input" : ""}
+              className={fieldErrors.full_name ? "error-input" : ""}
             />
+            {fieldErrors.full_name && (
+              <p className="field-error-register">{fieldErrors.full_name}</p>
+            )}
           </div>
+
+          {/* Email */}
           <div className="input-group">
             <label>Email</label>
             <input
@@ -76,10 +114,14 @@ const Register = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="Emailni kiriting"
-              required
-              className={error ? "error-input" : ""}
+              className={fieldErrors.email ? "error-input" : ""}
             />
+            {fieldErrors.email && (
+              <p className="field-error-register">{fieldErrors.email}</p>
+            )}
           </div>
+
+          {/* Password */}
           <div className="input-group password-group">
             <label>Parol</label>
             <div className="password-container">
@@ -89,8 +131,7 @@ const Register = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Parolni kiriting"
-                required
-                className={error ? "error-input" : ""}
+                className={fieldErrors.password ? "error-input" : ""}
               />
               <span
                 className="toggle-password"
@@ -100,15 +141,19 @@ const Register = () => {
                   className={`fa-solid ${
                     showPassword ? "fa-eye-slash" : "fa-eye"
                   }`}
-                ></i>
+                />
               </span>
             </div>
+            {fieldErrors.password && (
+              <p className="field-error">{fieldErrors.password}</p>
+            )}
           </div>
-          {error && <p className="error-message">{error}</p>}
+
           <button type="submit" id="register-button">
             Register
           </button>
         </form>
+
         <p>
           Do you already have an account?
           <button
