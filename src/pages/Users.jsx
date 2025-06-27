@@ -13,7 +13,7 @@ const Users = ({ onSelectUser, selectedChatUser }) => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      if (query.length <= 2) {
+      if (query.length <= 0) {
         setUsers([]);
         return;
       }
@@ -58,7 +58,7 @@ const Users = ({ onSelectUser, selectedChatUser }) => {
         <FontAwesomeIcon icon={faSearch} className="search-icon" />
       </div>
 
-      {query.length > 2 && (
+      {query.length > 0 && (
         <div className="search-results">
           {loading && <p>Qidirilmoqda...</p>}
           {!loading && users.length === 0 && <p>Hech narsa topilmadi</p>}
