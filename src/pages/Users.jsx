@@ -21,12 +21,11 @@ const Users = ({ onSelectUser, selectedChatUser }) => {
       setLoading(true);
       try {
         const response = await getData(`users/name/${query}`);
-
         if (response?.status === 401) {
           await refetch();
           return fetchUsers();
         }
-        
+
         setUsers(
           response?.success && Array.isArray(response.data) ? response.data : []
         );
@@ -40,9 +39,6 @@ const Users = ({ onSelectUser, selectedChatUser }) => {
 
     fetchUsers();
   }, [query, refetch]);
-
-  // 🔥 Agar foydalanuvchi tanlangan bo‘lsa, users ro‘yxatini yashiramiz
-  if (selectedChatUser) return null;
 
   return (
     <div className="users-section">
@@ -58,14 +54,26 @@ const Users = ({ onSelectUser, selectedChatUser }) => {
         <FontAwesomeIcon icon={faSearch} className="search-icon" />
       </div>
 
-      {query.length > 0 && (
+      {/* faqat foydalanuvchi tanlanmaganida ro‘yxat ko‘rsatiladi */}
+      {query.length > 0 && !selectedChatUser && (
         <div className="search-results">
           {loading && <p>Qidirilmoqda...</p>}
           {!loading && users.length === 0 && <p>Hech narsa topilmadi</p>}
           <ul>
             {users.map((user) => (
-              <li key={user.id} className="user-item" onClick={() => onSelectUser(user)}>
-                <img src={user.avatar_uri} alt={user.full_name} className="user-avatar" />
+              <li
+                key={user.id}
+                className="user-item"
+                onClick={() => {
+                  onSelectUser(user);
+                  setQuery(""); // optional: inputni tozalash
+                }}
+              >
+                <img
+                  src={user.avatar_uri}
+                  alt={user.full_name}
+                  className="user-avatar"
+                />
                 <span className="user-name">{user.full_name}</span>
               </li>
             ))}

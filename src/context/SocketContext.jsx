@@ -1,11 +1,20 @@
 import { createContext } from "react";
 import { io } from "socket.io-client";
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL; // To'g'ri o'qish
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
 
-export const socket = io(SOCKET_URL, {
-  autoConnect: false, // Avtomatik ulanmasin
-  transports: ["websocket"], // Faqat WebSocket ishlasin
-});
+const rawToken = localStorage.getItem("refToken");
 
+const token = rawToken?.startsWith('"') ? JSON.parse(rawToken) : rawToken;
+
+export const createSocket = () =>
+  io(`${SOCKET_URL}/chat`, {
+    autoConnect: false,
+    transports: ["websocket"],
+    query: {
+      token,
+    },
+  });
+
+export const socket = createSocket(); // default socket
 export const SocketContext = createContext(socket);

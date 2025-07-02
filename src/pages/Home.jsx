@@ -9,7 +9,10 @@ const Home = () => {
   return (
     <div className="box">
       <div className="children-box">
-        <Users onSelectUser={setSelectedChatUser} /> 
+        <Users
+          onSelectUser={setSelectedChatUser}
+          selectedChatUser={selectedChatUser}
+        />
         <Chat selectedChatUser={selectedChatUser} />
         <UserProfile />
       </div>
