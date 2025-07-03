@@ -14,7 +14,15 @@
   position: relative;
 }
 
-/* search box */
+/* search wrapper */
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* default search-box */
 .search-box {
   position: relative;
   display: flex;
@@ -26,10 +34,11 @@
   padding: 1.5%;
   background-color: rgb(251, 250, 250);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
   top: 2vh;
+  transition: width 0.3s ease;
 }
 
+/* input */
 #search-input {
   flex: 1;
   border: none;
@@ -37,14 +46,16 @@
   font-size: 16px;
   padding: 1.5%;
   background: transparent;
+  transition: width 0.3s ease, opacity 0.3s ease;
 }
 
+/* icon */
 .search-icon {
   color: #666;
   font-size: 15px;
   cursor: pointer;
-  position: absolute;
-  right: 2vh;
+  margin-left: auto;
+  margin-right: 10px;
 }
 
 /* Search natijalari */
@@ -113,7 +124,56 @@
 
 @media (max-width: 768px) {
   .users-section {
-    width: 100%;
+    width: auto;
     height: auto;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+    position: absolute;
+    top:5px;
+    right: 50px;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Search box kichik holatda */
+  .search-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    overflow: hidden;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    transition: width 0.3s ease, border-radius 0.3s ease;
+  }
+
+  /* Faqat icon ko‘rinadi */
+  #search-input {
+    width: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: width 0.3s ease, opacity 0.3s ease;
+  }
+
+  /* Hover yoki ichiga focus bo‘lsa – ochiladi */
+  .search-box:hover,
+  .search-box:focus-within {
+    width: 200px;
+    border-radius: 2rem;
+  }
+
+  .search-box:hover #search-input,
+  .search-box:focus-within #search-input {
+    width: 100%;
+    opacity: 1;
+    pointer-events: auto;
+    margin-left: 10px;
   }
 }
+

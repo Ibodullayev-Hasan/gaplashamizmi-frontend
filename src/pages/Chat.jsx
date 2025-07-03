@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import EmojiPicker from "emoji-picker-react";
 import { SocketContext } from "../context/SocketContext";
 import "../style/chat.style.css";
 import { useAuth } from "../context/auth";
@@ -13,6 +14,7 @@ const Chat = ({ selectedChatUser }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [typingUser, setTypingUser] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [showEmoji, setShowEmoji] = useState(false);
   const chatBoxRef = useRef(null);
 
   // 1️⃣ Socket ulanish va `register`
@@ -72,7 +74,7 @@ const Chat = ({ selectedChatUser }) => {
       if (selectedChatUser && senderId === selectedChatUser.id) {
         setTypingUser(selectedChatUser.full_name);
         setIsTyping(true);
-        setTimeout(() => setIsTyping(false), 1500); // 2 soniyadan so‘ng yo‘qoladi
+        setTimeout(() => setIsTyping(false), 2000); // 2 soniyadan so‘ng yo‘qoladi
       }
     });
 
@@ -89,8 +91,11 @@ const Chat = ({ selectedChatUser }) => {
         withUserId: selectedChatUser.id,
       });
 
-      socket.on("chat-history", (history) => {
-        setMessages(history);
+      socket.on("chat-history", (payload) => {
+        setMessages(payload.messages);
+
+        // 🔑 Har doim chat roomga qo‘shil
+        socket.emit("join-room", `chat_${payload.chatId}`);
       });
 
       return () => {
@@ -115,13 +120,12 @@ const Chat = ({ selectedChatUser }) => {
 
       socket.emit("send-message", { senderId, receiverId, text: message });
 
-      setMessages((prev) => [
-        ...prev,
-        { senderId, text: message, createdAt: new Date().toISOString() },
-      ]);
-
       setMessage("");
     }
+  };
+
+  const onEmojiClick = (emojiData) => {
+    setMessage((prev) => prev + emojiData.emoji);
   };
 
   const isUserOnline =
@@ -155,35 +159,76 @@ const Chat = ({ selectedChatUser }) => {
           </div>
 
           <div className="chat-box" ref={chatBoxRef}>
-            {messages.map((msg, index) => (
-              <div key={index} className="message-container">
+            {messages.map((msg, index) => {
+              const isOwnMessage = msg.senderId === currentUser?.id;
+              const avatar = isOwnMessage
+                ? currentUser?.avatar_uri
+                : selectedChatUser?.avatar_uri;
+
+              return (
                 <div
-                  className={
-                    msg.senderId === currentUser?.id
-                      ? "user-message"
-                      : "server-message"
-                  }
+                  key={index}
+                  className="message-container"
+                  style={{
+                    flexDirection: isOwnMessage ? "row-reverse" : "row",
+                  }}
                 >
-                  <div>{msg.text}</div>
-                  <div className="timestamp">
-                    {dayjs(msg.createdAt).format("HH:mm")}
+                  <img src={avatar} alt="avatar" className="message-avatar" />
+                  <div
+                    className={isOwnMessage ? "user-message" : "server-message"}
+                  >
+                    <div>{msg.text}</div>
+                    <div className="timestamp">
+                      {dayjs(msg.createdAt).format("HH:mm")}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="chat-input-container">
+            {/* message input */}
             <textarea
               value={message}
               onChange={handleTyping}
+              onKeyDown={(e) => {
+                if (e.ctrlKey && e.key === "Enter") {
+                  sendMessage();
+                }
+              }}
+              onFocus={() => setShowEmoji(false)}
               placeholder="Xabar yozing..."
               className="chat-input"
               rows="1.5"
             />
+
+            {/* emojis */}
+            <button
+              type="button"
+              className="emoji-button"
+              onClick={() => setShowEmoji((prev) => !prev)}
+            >
+              😊
+            </button>
+
+            {/* push */}
             <button onClick={sendMessage} className="chat-button">
               🚀
             </button>
+
+            {showEmoji && (
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "60px",
+                  right: "10px",
+                  zIndex: 10,
+                }}
+              >
+                <EmojiPicker onEmojiClick={onEmojiClick} />
+              </div>
+            )}
           </div>
         </>
       ) : (
@@ -194,7 +239,6 @@ const Chat = ({ selectedChatUser }) => {
             className="default-chat-icon"
           />
           <h2>Kim bilandir gaplashamizmi? 😄</h2>
-          <p>Chap tomondan suhbatdosh tanlang va yozishni boshlang!</p>
         </div>
       )}
     </div>

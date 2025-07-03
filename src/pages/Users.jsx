@@ -5,16 +5,18 @@ import { getData } from "../services/get.service";
 import "../style/users.style.css";
 import { useAuth } from "../context/auth";
 
-const Users = ({ onSelectUser, selectedChatUser }) => {
+const Users = ({ onSelectUser }) => {
   const { refetch } = useAuth();
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
-      if (query.length <= 0) {
+      if (query.trim().length <= 0) {
         setUsers([]);
+        setShowResults(false); // input bo‘sh bo‘lsa natijalarni yashir
         return;
       }
 
@@ -29,9 +31,11 @@ const Users = ({ onSelectUser, selectedChatUser }) => {
         setUsers(
           response?.success && Array.isArray(response.data) ? response.data : []
         );
+        setShowResults(true);
       } catch (error) {
         console.error("Xatolik:", error);
         setUsers([]);
+        setShowResults(false);
       } finally {
         setLoading(false);
       }
@@ -42,20 +46,25 @@ const Users = ({ onSelectUser, selectedChatUser }) => {
 
   return (
     <div className="users-section">
-      <div className="search-box">
-        <input
-          id="search-input"
-          type="text"
-          placeholder="Search..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          spellCheck="false"
-        />
-        <FontAwesomeIcon icon={faSearch} className="search-icon" />
+      <div className="search-wrapper">
+        <div className="search-box">
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Search..."
+            value={query}
+            onChange={(e) => {
+              const val = e.target.value;
+              setQuery(val);
+              setShowResults(val.trim().length > 0);
+            }}
+            spellCheck="false"
+          />
+          <FontAwesomeIcon icon={faSearch} className="search-icon" />
+        </div>
       </div>
 
-      {/* faqat foydalanuvchi tanlanmaganida ro‘yxat ko‘rsatiladi */}
-      {query.length > 0 && !selectedChatUser && (
+      {showResults && (
         <div className="search-results">
           {loading && <p>Qidirilmoqda...</p>}
           {!loading && users.length === 0 && <p>Hech narsa topilmadi</p>}
@@ -66,7 +75,8 @@ const Users = ({ onSelectUser, selectedChatUser }) => {
                 className="user-item"
                 onClick={() => {
                   onSelectUser(user);
-                  setQuery(""); // optional: inputni tozalash
+                  setShowResults(false); // tanlagandan keyin yashir
+                  setQuery(""); // inputni tozalash optional
                 }}
               >
                 <img

@@ -54,7 +54,9 @@ body {
   position: absolute;
   top: 15px;
   right: 15px;
-  background: none;
+  background: white;
+  padding: 5px;
+  border-radius: 8px;
   border: none;
   font-size: 24px;
   cursor: pointer;

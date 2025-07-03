@@ -56,11 +56,18 @@
 
 /* Xabar konteyneri */
 .message-container {
-  display: flex;
-  width: 100%;
+ display: flex;
+  align-items: flex-end;
+  gap: 8px;
   margin-bottom: 10px;
-  flex-direction: column;
-  justify-content: space-between;
+  width: 100%;
+}
+
+.message-avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 /* Foydalanuvchi va server xabarlarining umumiy xususiyatlari */
@@ -191,6 +198,14 @@
   opacity: 0.8;
 }
 
+.emoji-button {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .chat-container {
@@ -201,8 +216,15 @@
 @media (max-width: 768px) {
   .chat-container {
     width: 100%;
-    height: auto;
+    height: 100vh; /* height auto emas, aniq bo'lishi kerak! */
     padding: 5px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chat-box {
+    flex-grow: 1;
+    overflow-y: auto;
   }
 
   .user-message,
