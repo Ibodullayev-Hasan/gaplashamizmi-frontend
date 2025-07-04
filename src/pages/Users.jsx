@@ -51,7 +51,7 @@ const Users = ({ onSelectUser }) => {
           <input
             id="search-input"
             type="text"
-            placeholder="Search..."
+            placeholder="Search users by name or email..."
             value={query}
             onChange={(e) => {
               const val = e.target.value;
@@ -59,6 +59,7 @@ const Users = ({ onSelectUser }) => {
               setShowResults(val.trim().length > 0);
             }}
             spellCheck="false"
+            autoComplete="off"
           />
           <FontAwesomeIcon icon={faSearch} className="search-icon" />
         </div>

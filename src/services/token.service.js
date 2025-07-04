@@ -15,7 +15,6 @@ axiosInstance.interceptors.request.use(
           config.headers.Authorization = `Bearer ${accessToken}`;
         }
       } catch (e) {
-        console.warn("Token JSON.parse() xato:", e.message);
         localStorage.removeItem("accToken");
       }
     }
