@@ -22,6 +22,7 @@
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.13",
     "emoji-picker-react": "^4.12.3",
+    "fast-average-color": "^9.5.0",
     "react": "^19.0.0",
     "react-cookie": "^7.2.2",
     "react-dom": "^19.0.0",

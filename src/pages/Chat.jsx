@@ -5,7 +5,7 @@ import "../style/chat.style.css";
 import { useAuth } from "../context/auth";
 import dayjs from "dayjs";
 
-const Chat = ({ selectedChatUser }) => {
+const Chat = ({ selectedChatUser, showUserProfile, setShowUserProfile }) => {
   const socket = useContext(SocketContext);
   const { data } = useAuth();
   const currentUser = data?.data;
@@ -131,18 +131,22 @@ const Chat = ({ selectedChatUser }) => {
   const isUserOnline =
     selectedChatUser && onlineUsers.includes(selectedChatUser.id);
 
+  // --------------------------------------------------------  //
   return (
-    <div className="chat-container">
+    <div className={`chat-container ${!showUserProfile ? "full" : ""}`}>
       {selectedChatUser ? (
         <>
           {/* chat container header */}
           <div className="chat-header">
             {/* user avatar */}
-            <img
-              className="header-user-avatar"
-              src={selectedChatUser.avatar_uri}
-              alt="user"
-            />
+            <div className="user-avatar-container">
+              <img
+                className="header-user-avatar"
+                src={selectedChatUser.avatar_uri}
+                alt="user"
+                onClick={() => setShowUserProfile(true)}
+              />
+            </div>
 
             <div className="name-status-container">
               {/* user full name */}

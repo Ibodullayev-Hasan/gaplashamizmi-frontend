@@ -8,15 +8,29 @@ const BASE_URL = import.meta.env.VITE_API;
 
 /* ---------------------------------------------- */
 // API ga POST so‘rovi yuboruvchi umumiy funksiya
-export const postData = async ({ url, body }) => {
+export const postData = async ({ url, body, isFormData = false, method = "POST" }) => {
   try {
-    const response = await axiosInstance.post(`${BASE_URL}${url}`, body);
+    const config = {};
+
+    if (isFormData) {
+      config.headers = {
+        "Content-Type": "multipart/form-data",
+      };
+    }
+
+    const response = await axiosInstance({
+      method,
+      url: `${BASE_URL}${url}`,
+      data: body,
+      ...config,
+    });
 
     return response?.data;
   } catch (error) {
-    return Promise.reject(error); // Xatolikni qaytarish uchun
+    return Promise.reject(error);
   }
 };
+
 
 // API ga post so‘rovini yuborish uchun mutatsiya (React Query bilan ishlaydi)
 export const postDataMutation = (key) => {

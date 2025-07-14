@@ -19,7 +19,7 @@ const Login = () => {
     if (globalError) {
       const timer = setTimeout(() => {
         setGlobalError("");
-      }, 4000); // 4 sekunddan keyin yo‘qoladi
+      }, 4000);
 
       return () => clearTimeout(timer);
     }

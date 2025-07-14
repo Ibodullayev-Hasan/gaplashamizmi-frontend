@@ -1,0 +1,229 @@
+.tools-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 150; /* orqa fon ustida, tools ostida */
+}
+
+.tools-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(4px); /* blur effekti */
+  background-color: rgba(0, 0, 0, 0.2); /* yarim qora */
+  z-index: 200;
+}
+
+#tools {
+  font-family: var(--chat-font);
+  width: 27vw;
+  height: 96vh;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 10px 5px 5px gray;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  z-index: 300;
+  /* padding: .5%; */
+  transition: opacity 0.5s ease;
+}
+
+.close-arrow {
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  font-size: 1.5rem;
+  left: 10px;
+  top: 10px;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.close-arrow:hover {
+  background-color: rgba(185, 185, 185, 0.451);
+}
+
+.avatar-section {
+  width: 100%;
+  height: 250px;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+  border-bottom: 1px solid black;
+}
+
+/* Default avatar */
+.default-avatar-img {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Userning o‘zi yuklagan avatar */
+.user-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+}
+
+
+#img-upload {
+  display: none;
+}
+
+.img-upload-pen {
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  z-index: 1;
+  right: 10px;
+  top: 200px;
+  font-size: 1.2rem;
+}
+
+.img-upload-pen:hover {
+  background-color: rgba(185, 185, 185, 0.451);
+}
+
+.avatar-section p {
+  position: absolute;
+  font-size: 1.8rem;
+  font-weight: bold;
+  z-index: 1;
+  left: 10px;
+}
+
+.img-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 250px;
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  border-radius: 0 0 10px 10px;
+}
+
+/* re-use spinner style */
+.small-spinner {
+  width: 36px;
+  height: 36px;
+  border: 4px solid #ddd;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.tools-flash-error {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff4d4d;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+  z-index: 1001;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+}
+
+/* tools menu */
+.tools-menu {
+  list-style: none;
+  padding: 0;
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tools-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+  font-size: 1rem;
+  background-color: #f5f5f5;
+}
+
+.tools-menu-item:hover {
+  background-color: #e0e0e0;
+}
+
+.tools-menu-item svg {
+  margin-right: 12px;
+  font-size: 1.2rem;
+}
+
+.log-out {
+  width: 100px;
+  position: absolute;
+  bottom: 5px;
+  right: 20px;
+  background-color: red;
+  padding: 2%;
+  border-radius: 12px;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.log-out:hover {
+  background-color: darkred;
+}

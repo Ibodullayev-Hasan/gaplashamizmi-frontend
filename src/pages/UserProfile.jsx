@@ -1,38 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { useAuth } from "../context/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom"; // <-- Qo‘shildi
+import {
+  faArrowLeftLong,
+  faBars,
+  faCircleInfo,
+  faEnvelope,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import "../style/user-profile.style.css";
 
-const UserProfile = () => {
-  const { data, setToken } = useAuth();
-  const navigate = useNavigate(); // <-- Qo‘shildi
-  const user = data?.data;
-  const user_profile = user?.user_profile;
+const UserProfile = ({ setShowUserProfile, receiverUser }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const handleLogout = () => {
-    localStorage.removeItem("accToken");
-    localStorage.removeItem("refToken");
-    setToken(null);
-    navigate("/login");
-  };
-
-  useEffect(() => {
-    if (user_profile?.chat_back_img) {
-      const root = document.documentElement;
-      root.style.setProperty("--chat-theme", user_profile.chat_theme || "#fff");
-      root.style.setProperty(
-        "--chat-font",
-        user_profile.chat_font || "Arial, sans-serif"
-      );
-      root.style.setProperty(
-        "--chat-back-img",
-        `url("${user_profile.chat_back_img}")`
-      );
-    }
-  }, [user_profile]);
 
   return (
     <>
@@ -41,17 +20,39 @@ const UserProfile = () => {
       </button>
 
       <div className={`user-profile-container ${isOpen ? "open" : ""}`}>
-        <div className="user-profile">
-          <img src={user?.avatar_uri} alt="user avatar" className="avatar" />
-          <p>
-            Hi 👋
-            <span className="user-name">{user ? user.full_name : "Guest"}</span>
-          </p>
+        {/* Arrow button */}
+        <button
+          className="hide-profile-btn"
+          onClick={() => setShowUserProfile(false)}
+        >
+          <FontAwesomeIcon icon={faArrowLeftLong} />
+        </button>
 
-          {/* Log out tugmasi */}
-          <button className="logout-btn" onClick={handleLogout}>
-            Log out
-          </button>
+        {/* receiver user profile */}
+        <div className="user-profile">
+          <img
+            src={receiverUser?.avatar_uri || "/default-avatar.png"}
+            alt="user avatar"
+            className="avatar"
+          />
+          <p className="user-name">{receiverUser?.full_name || "No User"}</p>
+        </div>
+
+        <div className="user-info-container">
+          <ul>
+            <li className="user-info-full-name">
+              <FontAwesomeIcon icon={faUser} className="icon-user" />
+              <span>{receiverUser?.full_name}</span>
+            </li>
+            <li className="user-info-email">
+              <FontAwesomeIcon icon={faEnvelope} className="icon-email" />
+              <span>{receiverUser?.email}</span>
+            </li>
+            <li className="user-info-bio">
+              <FontAwesomeIcon icon={faCircleInfo} className="icon-info" />
+              <span>{receiverUser?.bio || "No bio available"}</span>
+            </li>
+          </ul>
         </div>
       </div>
     </>

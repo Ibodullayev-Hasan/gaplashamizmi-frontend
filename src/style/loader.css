@@ -26,7 +26,7 @@
   right: -70px;
   top: 30px;
   font-size: 60px;
-  animation: beckon 1.8s infinite;
+  animation: beckon 1s infinite;
   transform-origin: center center;
 }
 
@@ -37,7 +37,7 @@
   color: #333;
   font-weight: 600;
   opacity: 0;
-  animation: showText 2.4s forwards;
+  animation: showText .5s forwards;
   /* animation-delay: .5s;/ */
 }
 

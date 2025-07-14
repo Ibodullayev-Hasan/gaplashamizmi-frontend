@@ -8,34 +8,44 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   display: flex;
+  justify-content: start;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
   position: relative;
+  overflow: hidden;
+}
+
+.users-account-bar {
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 1.5%;
+  border-radius: 50%;
 }
 
 /* search wrapper */
 .search-wrapper {
   position: relative;
-  width: 100%;
+  width: 95%;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  flex-direction: row;
+  padding: 3% 0;
+  align-items: center;
+  gap: 10px;
 }
 
 /* default search-box */
 .search-box {
-  position: relative;
   display: flex;
   align-items: center;
-  width: 98%;
+  width: 85%;
   max-width: 400px;
   border: 1px solid #ccc;
   border-radius: 2rem;
-  padding: 1.5%;
+  padding: 1%;
   background-color: rgb(251, 250, 250);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  top: 2vh;
   transition: width 0.3s ease;
+  overflow: hidden;
 }
 
 /* input */
@@ -54,8 +64,8 @@
   color: #666;
   font-size: 15px;
   cursor: pointer;
-  margin-left: auto;
-  margin-right: 10px;
+  position: relative;
+  right: 5px;
 }
 
 /* Search natijalari */
@@ -63,12 +73,13 @@
   position: absolute;
   top: 10%; /* `search-box` pastiga tushirish */
   left: 0; /* `left: 50%` ni olib tashlaymiz */
-  width: 100%; /* `search-box` bilan bir xil kenglik */
+  width: 100%;
+  height: 100%;
   background: white;
   border-radius: 10px;
   padding: 10px;
-  max-height: 60vh;
-  overflow-y: auto;
+  /* max-height: 100vh; */
+  overflow-y: scroll;
   z-index: 1000;
 }
 
@@ -115,6 +126,101 @@
   display: none;
 }
 
+/* recent users */
+.recent-users {
+  flex-grow: 1;
+  height: 100%;
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  background-color: #f9f9f9; /* biroz farqli, lekin ko‘zga urilmaydi */
+  padding: 8px;
+  margin-top: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.recent-users::-webkit-scrollbar {
+  width: 100px;
+}
+
+.recent-users::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.recent-users::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); /* yoki #aaa */
+  border-radius: 6px;
+}
+
+.recent-users {
+  scrollbar-width: none;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.scroll-recent-users ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.scroll-recent-users li {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  margin-bottom: 6px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.scroll-recent-users li:hover {
+  background-color: #f1f1f1;
+}
+
+.scroll-recent-users img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.scroll-recent-users p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.scroll-recent-users span {
+  font-size: 0.8rem;
+  color: #666;
+  display: block;         /* block bo'lishi kerak */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300px;       /* kerakli maksimal uzunlik */
+}
+
+
+.online-status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: relative;
+  top: 15px;
+  left: -10px;
+}
+
+/* Online yashil */
+.online-status.online {
+  background-color: green;
+}
+
+/* Offline kulrang */
+.online-status.offline {
+  background-color: gray;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .users-section {
@@ -132,7 +238,7 @@
     border: none;
     box-shadow: none;
     position: absolute;
-    top:5px;
+    top: 5px;
     right: 50px;
     z-index: 999;
     display: flex;
@@ -176,4 +282,3 @@
     margin-left: 10px;
   }
 }
-

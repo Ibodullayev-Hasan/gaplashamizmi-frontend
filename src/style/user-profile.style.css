@@ -1,14 +1,13 @@
 :root {
-  --chat-back-img: url("https://thumbs.6sqft.com/wp-content/uploads/2022/01/10130734/NYC-at-night-skyline.jpg");
+  --chat-back-img: url("https://wallpapers.com/images/hd/dark-city-background-ympe22eapcw8su8e.jpg");
+  /* background-image: url(); */
 }
-
 body {
   background-image: var(--chat-back-img);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
-
 
 .user-profile-container {
   font-family: var(--chat-font);
@@ -19,33 +18,80 @@ body {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.3s ease-in-out;
+  flex-direction: column;
+  /* overflow: hidden; */
 }
 
+.hide-profile-btn {
+  position: relative;
+  top: 2%;
+  right: 40%;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 0;
+}
+
+/* --------------------- */
+/* user profile */
 .user-profile {
   text-align: center;
+  border-bottom: 1px solid black;
 }
 
 .avatar {
-  width: 20vh;
-  height: 20vh;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
-  border: 2px solid #ccc;
   object-fit: cover;
+  margin-bottom: 5px;
 }
 
-.user-profile p {
-  margin-top: 10px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.user-name{
+.user-name {
   color: darkblue;
-  position: relative;
-  left: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px 0 10px 0;
+  text-align: left;
+  padding-left: 2%;
+}
+
+/* user-info-container */
+.user-info-container {
+  padding: 10px;
+}
+
+.user-info-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* li lar orasidagi masofa */
+}
+
+.user-info-container li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.user-info-container li span {
+  font-size: 1.2rem;
+}
+
+.icon-user {
+  font-size: 1.7rem;
+  color: rgb(92, 90, 90);
+}
+.icon-email {
+  font-size: 1.7rem;
+  color: rgb(92, 90, 90);
+}
+.icon-info {
+  font-size: 1.7rem;
+  color: rgb(92, 90, 90);
 }
 
 /* Hamburger menyu tugmasi */
@@ -62,25 +108,6 @@ body {
   cursor: pointer;
 }
 
-.logout-btn {
-  position: absolute;
-  bottom: 2rem;
-  right: 2rem;
-  padding: 5px 10px;
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.logout-btn:hover {
-  background-color: #c0392b;
-}
-
-
 /* Kichik ekranda profili yashiramiz */
 @media (max-width: 768px) {
   .user-profile-container {
@@ -95,6 +122,14 @@ body {
     transition: right 0.3s ease-in-out;
   }
 
+  .hide-profile-btn {
+    display: none;
+  }
+
+  /* .user-profile {
+    position: relative;
+    top: 15%;
+  } */
   /* Menyu tugmasini ko‘rsatamiz */
   .menu-btn {
     display: block;
