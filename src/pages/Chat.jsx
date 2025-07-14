@@ -13,7 +13,6 @@ const Chat = ({ selectedChatUser, showUserProfile, setShowUserProfile }) => {
   const [message, setMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [typingUser, setTypingUser] = useState(null);
-  const [onlineUsers, setOnlineUsers] = useState([]);
   const [showEmoji, setShowEmoji] = useState(false);
   const chatBoxRef = useRef(null);
 
@@ -34,17 +33,6 @@ const Chat = ({ selectedChatUser, showUserProfile, setShowUserProfile }) => {
       socket.disconnect();
     };
   }, [socket, currentUser]);
-
-  // 2️⃣ Online foydalanuvchilarni olish
-  useEffect(() => {
-    socket.on("users", (userIds) => {
-      setOnlineUsers(userIds);
-    });
-
-    return () => {
-      socket.off("users");
-    };
-  }, [socket]);
 
   // 3️⃣ Xabarlar olish (real-time)
   useEffect(() => {
@@ -68,7 +56,19 @@ const Chat = ({ selectedChatUser, showUserProfile, setShowUserProfile }) => {
     }
   };
 
-  // typing emit
+  useEffect(() => {
+    socket.on("user-status-changed", ({ userId, is_online }) => {
+      if (selectedChatUser?.id === userId) {
+        selectedChatUser.is_online = is_online; // manual update
+      }
+    });
+
+    return () => {
+      socket.off("user-status-changed");
+    };
+  }, [selectedChatUser]);
+
+  // typing
   useEffect(() => {
     socket.on("typing", ({ senderId }) => {
       if (selectedChatUser && senderId === selectedChatUser.id) {
@@ -128,8 +128,7 @@ const Chat = ({ selectedChatUser, showUserProfile, setShowUserProfile }) => {
     setMessage((prev) => prev + emojiData.emoji);
   };
 
-  const isUserOnline =
-    selectedChatUser && onlineUsers.includes(selectedChatUser.id);
+  const isUserOnline = selectedChatUser?.is_online === true;
 
   // --------------------------------------------------------  //
   return (
