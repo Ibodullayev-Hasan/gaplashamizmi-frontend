@@ -19,7 +19,6 @@
 }
 
 #tools {
-  font-family: var(--chat-font);
   width: 27vw;
   height: 96vh;
   background-color: rgb(255, 255, 255);
@@ -31,7 +30,7 @@
   position: absolute;
   left: 10px;
   top: 10px;
-  z-index: 300;
+  z-index: 400;
   /* padding: .5%; */
   transition: opacity 0.5s ease;
 }
@@ -226,4 +225,10 @@
 
 .log-out:hover {
   background-color: darkred;
+}
+
+@media (max-width:768px){
+  #tools{
+    width: 90%;
+  }
 }

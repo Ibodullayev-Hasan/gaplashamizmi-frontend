@@ -80,7 +80,7 @@
   padding: 10px;
   /* max-height: 100vh; */
   overflow-y: scroll;
-  z-index: 1000;
+  z-index: 200;
 }
 
 .search-results ul {
@@ -240,7 +240,7 @@
     position: absolute;
     top: 5px;
     right: 50px;
-    z-index: 999;
+    /* z-index: 200; */
     display: flex;
     justify-content: center;
     align-items: center;

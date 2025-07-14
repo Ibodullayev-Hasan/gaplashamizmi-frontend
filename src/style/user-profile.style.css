@@ -94,19 +94,6 @@ body {
   color: rgb(92, 90, 90);
 }
 
-/* Hamburger menyu tugmasi */
-.menu-btn {
-  display: none;
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: white;
-  padding: 5px;
-  border-radius: 8px;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-}
 
 /* Kichik ekranda profili yashiramiz */
 @media (max-width: 768px) {
@@ -131,10 +118,6 @@ body {
     top: 15%;
   } */
   /* Menyu tugmasini ko‘rsatamiz */
-  .menu-btn {
-    display: block;
-    z-index: 1100;
-  }
 
   .avatar {
     width: 15vh;

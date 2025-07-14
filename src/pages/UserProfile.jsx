@@ -1,5 +1,4 @@
 import React, { useState} from "react";
-import { useAuth } from "../context/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeftLong,
@@ -15,9 +14,6 @@ const UserProfile = ({ setShowUserProfile, receiverUser }) => {
 
   return (
     <>
-      <button className="menu-btn" onClick={() => setIsOpen(!isOpen)}>
-        <FontAwesomeIcon icon={faBars} />
-      </button>
 
       <div className={`user-profile-container ${isOpen ? "open" : ""}`}>
         {/* Arrow button */}
