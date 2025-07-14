@@ -274,6 +274,10 @@
     border-radius: 2rem;
   }
 
+  .recent-users{
+    display: none;
+  }
+
   .search-box:hover #search-input,
   .search-box:focus-within #search-input {
     width: 100%;
