@@ -70,7 +70,7 @@ const Login = () => {
             return;
           }
 
-          setGlobalError("Nomaʼlum xatolik yuz berdi");
+          setGlobalError("Server vaqtinchalik toxtatilgan!");
         },
       }
     );
