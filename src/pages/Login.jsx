@@ -73,7 +73,7 @@ const Login = () => {
             return;
           }
 
-          setGlobalError("Server vaqtinchalik toxtatilgan!");
+          setGlobalError("Nimadir xato ketdi❗");
         },
       }
     );
