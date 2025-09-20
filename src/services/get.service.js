@@ -7,7 +7,7 @@ export const getData = async (url) => {
     const res = await axiosInstance.get(`${BASE_URL}${url}`);
      
     return res?.data;
-  } catch (error) {
+  } catch (error) {    
     return error?.response?.status;
   }
 };

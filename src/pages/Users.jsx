@@ -20,7 +20,11 @@ const Users = ({ onSelectUser, setShowTools }) => {
     const fetchRecentUsers = async () => {
       try {
         const res = await getData("chat/recent");
+console.log(res);
+
         if (res?.status === 401) {
+          console.log('401 chat recent');
+          
           await refetch();
           return fetchRecentUsers();
         }

@@ -15,15 +15,18 @@ const Login = () => {
   const { mutate: userLogin } = postDataMutation("user");
   const navigate = useNavigate();
 
+  // 🔔 Sahifa ochilganda bir marta flesh xabar chiqishi
   useEffect(() => {
-    if (globalError) {
-      const timer = setTimeout(() => {
-        setGlobalError("");
-      }, 4000);
+    setGlobalError(
+      "Server vaqtincha renderda turibdi, so'rovlar biroz kechikishi mumkin. Iltimos, kuting!"
+    );
 
-      return () => clearTimeout(timer);
-    }
-  }, [globalError]);
+    const timer = setTimeout(() => {
+      setGlobalError("");
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
